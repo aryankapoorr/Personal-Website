@@ -2,7 +2,7 @@ export const quickLinks = [
   {
     id: "linkedin",
     label: "LinkedIn",
-    url: "https://linkedin.com/in/aryankapoor",
+    url: "https://www.linkedin.com/in/aryan-kapoor/",
     icon: "FaLinkedin",
     type: "professional",
     external: true
@@ -10,7 +10,7 @@ export const quickLinks = [
   {
     id: "github",
     label: "GitHub",
-    url: "https://github.com/aryankapoor",
+    url: "https://github.com/aryankapoorr",
     icon: "FaGithub",
     type: "professional",
     external: true
@@ -18,7 +18,7 @@ export const quickLinks = [
   {
     id: "email",
     label: "Email",
-    url: "mailto:aryan.kapoor@email.com",
+    url: "mailto:aryan.kapoor.1102@gmail.com",
     icon: "FaEnvelope",
     type: "contact",
     external: false
