@@ -1,6 +1,5 @@
 import './App.css';
-import { Button } from './components/common';
-import { Hero } from './components/sections';
+import { Hero, QuickLinks } from './components/sections';
 
 function App() {
   return (
@@ -38,42 +37,8 @@ function App() {
           {/* Hero Section */}
           <Hero onCTAClick={(cta) => console.log('CTA clicked:', cta)} />
 
-          {/* Quick Links Section Placeholder */}
-          <section id="quick-links" className="section-padding">
-            <div className="container">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-gray-900 mb-8">
-                  Connect With Me
-                </h2>
-                <div className="flex flex-wrap justify-center gap-6">
-                  <a href="#" className="card p-6 hover:shadow-lg transition-shadow">
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <span className="text-blue-600 text-xl">💼</span>
-                      </div>
-                      <h3 className="font-semibold text-gray-900">LinkedIn</h3>
-                    </div>
-                  </a>
-                  <a href="#" className="card p-6 hover:shadow-lg transition-shadow">
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <span className="text-gray-600 text-xl">🐙</span>
-                      </div>
-                      <h3 className="font-semibold text-gray-900">GitHub</h3>
-                    </div>
-                  </a>
-                  <a href="#" className="card p-6 hover:shadow-lg transition-shadow">
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <span className="text-green-600 text-xl">📧</span>
-                      </div>
-                      <h3 className="font-semibold text-gray-900">Email</h3>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </section>
+          {/* Quick Links Section */}
+          <QuickLinks />
 
           {/* Experience Section Placeholder */}
           <section id="experience" className="section-padding bg-gray-50">
