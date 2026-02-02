@@ -45,23 +45,16 @@ const Education = () => {
   return (
     <section 
       id="education" 
-      className={`py-0 bg-gray-850 ${getResponsiveClasses('layout')}`}
+      className={`py-0 pb-2.5 bg-gray-850 ${getResponsiveClasses('layout')}`}
       ref={sectionRef}
     >
       <div className="container">
         <motion.div
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto px-0.5"
           variants={containerVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          {/* Section Header */}
-          <motion.div className="text-center mb-3 sm:mb-4" variants={itemVariants}>
-            <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-500 to-teal-600 bg-clip-text text-transparent mb-2">
-              Education
-            </h2>
-          </motion.div>
-
           {/* Education Cards - Horizontal Layout */}
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
@@ -70,7 +63,7 @@ const Education = () => {
             {education.map((edu) => (
               <motion.div
                 key={edu.id}
-                className="bg-gray-900/50 rounded-lg p-4 sm:p-5 border border-gray-700/50 hover:border-blue-500/30 transition-all duration-300"
+                className="bg-gray-900/50 rounded-lg p-4 sm:p-5 border border-gray-700/50 hover:border-blue-500/30 transition-all duration-300 mx-0.5"
                 whileHover={{ scale: 1.02 }}
               >
                 <div className="flex items-start gap-3">

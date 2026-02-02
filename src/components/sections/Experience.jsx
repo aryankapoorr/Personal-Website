@@ -1,11 +1,10 @@
 import { motion } from 'framer-motion';
-import { Card } from '../common';
+import { useState, useRef, useEffect } from 'react';
 import { experiences } from '../../data/experience';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
-import { scrollStaggerContainer, scrollSlideUp, scrollFadeIn } from '../../utils/animations';
 
 /**
- * Experience Section Component - Simple and Working Version
+ * Experience Section Component - Scroll-based Expand/Contract Design
  */
 const Experience = ({ experienceData = experiences }) => {
   const [sectionRef, isVisible] = useIntersectionObserver({
@@ -14,10 +13,34 @@ const Experience = ({ experienceData = experiences }) => {
     triggerOnce: true
   });
 
-  // Enhanced animation variants using scroll-specific animations
-  const containerVariants = scrollStaggerContainer;
-  const itemVariants = scrollSlideUp;
-  const headerVariants = scrollFadeIn;
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 50,
+      scale: 0.95
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
 
   // Helper functions
   function formatDate(dateString) {
@@ -34,157 +57,257 @@ const Experience = ({ experienceData = experiences }) => {
     }
   }
 
+  // Get technology color based on category
+  const getTechColor = (category) => {
+    const colors = {
+      framework: 'bg-blue-500/20 text-blue-300 border-blue-400/30',
+      language: 'bg-green-500/20 text-green-300 border-green-400/30',
+      database: 'bg-purple-500/20 text-purple-300 border-purple-400/30',
+      tool: 'bg-orange-500/20 text-orange-300 border-orange-400/30',
+      default: 'bg-gray-500/20 text-gray-300 border-gray-400/30'
+    };
+    return colors[category] || colors.default;
+  };
+
   return (
     <section 
       id="experience" 
-      className="pt-4 pb-12 sm:pt-6 sm:pb-16 md:pb-20 lg:pb-24 xl:pb-28 bg-gradient-to-br from-gray-900 via-slate-900 to-black relative"
-      aria-label="Work Experience"
+      className="relative py-12 sm:py-16 md:py-20 overflow-hidden"
+      aria-label="Professional Experience"
       ref={sectionRef}
     >
+      {/* Simple Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-gray-900 to-black">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 via-transparent to-teal-900/10"></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      </div>
+
       <div className="container relative z-10">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
-          className="text-center mb-12 sm:mb-16 px-4 sm:px-6 lg:px-0"
-          variants={headerVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
+          className="text-center mb-8 sm:mb-12"
+          initial={{ opacity: 0, y: -20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="text-responsive-2xl font-bold bg-gradient-to-r from-blue-500 via-teal-500 to-slate-600 bg-clip-text text-transparent mb-4 sm:mb-6">
-            Work Experience
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-teal-400 to-cyan-300 bg-clip-text text-transparent mb-3">
+            Experience
           </h2>
-          <p className="text-responsive-base text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            My professional journey through innovation, impact, and continuous growth 🚀
+          <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">
+            Professional journey through innovation and growth
           </p>
         </motion.div>
 
-        {/* Experience Entries */}
+        {/* Experience Cards */}
         <motion.div
-          className="spacing-responsive-lg px-4 sm:px-6 lg:px-0"
+          className="max-w-4xl mx-auto space-y-6"
           variants={containerVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          {experienceData.map((experience) => (
-            <motion.div
-              key={experience.id}
-              variants={itemVariants}
-              className="relative"
-            >
-              <Card
-                className="bg-gray-800/90 backdrop-blur-sm border border-gray-700/50 shadow-2xl p-4 sm:p-6 md:p-8"
-                hover={true}
-              >
-                {/* Header */}
-                <div className="mb-4 sm:mb-6">
-                  <div className="flex flex-col gap-3 sm:gap-4 mb-3 sm:mb-4">
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-teal-600 bg-clip-text text-transparent leading-tight">
-                      {experience.position}
-                    </h3>
-                    <div className="text-xs sm:text-sm text-gray-400">
-                      <span className="font-semibold text-cyan-400">
-                        {formatDate(experience.startDate)} - {formatDate(experience.endDate)}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-purple-400 mb-2">
-                    {experience.company}
-                  </h4>
-                  {experience.location && (
-                    <span className="text-xs sm:text-sm text-gray-400">
-                      📍 {experience.location}
-                    </span>
-                  )}
-                </div>
-
-                {/* Description */}
-                <p className="text-gray-300 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base md:text-lg">
-                  {experience.description}
-                </p>
-
-                {/* Achievements */}
-                {experience.achievements && experience.achievements.length > 0 && (
-                  <div className="mb-4 sm:mb-6">
-                    <h5 className="text-xs sm:text-sm font-bold text-cyan-400 mb-2 sm:mb-3 uppercase tracking-wider">
-                      🏆 Key Achievements
-                    </h5>
-                    <ul className="space-y-1.5 sm:space-y-2">
-                      {experience.achievements.map((achievement, achievementIndex) => (
-                        <li 
-                          key={achievementIndex}
-                          className="flex items-start gap-2 sm:gap-3 text-gray-300"
-                        >
-                          <span className="flex-shrink-0 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-cyan-400 rounded-full mt-1.5 sm:mt-2" />
-                          <span className="leading-relaxed text-sm sm:text-base">{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Technologies */}
-                {experience.technologies && experience.technologies.length > 0 && (
-                  <div>
-                    <h5 className="text-xs sm:text-sm font-bold text-purple-400 mb-2 sm:mb-3 uppercase tracking-wider">
-                      ⚡ Technologies Used
-                    </h5>
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                      {experience.technologies.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-gray-700/50 text-cyan-400 border border-cyan-500/30"
-                        >
-                          {tech.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </Card>
-            </motion.div>
+          {experienceData.map((exp, index) => (
+            <ExperienceCard
+              key={exp.id}
+              experience={exp}
+              index={index}
+              cardVariants={cardVariants}
+              formatDate={formatDate}
+              getTechColor={getTechColor}
+            />
           ))}
-        </motion.div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          className="text-center mt-12 sm:mt-16 px-4 sm:px-6 lg:px-0"
-          variants={headerVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-        >
-          <p className="text-lg sm:text-xl text-gray-300 mb-4 sm:mb-6 font-medium">
-            Ready to explore my projects? 🚀
-          </p>
-          
-          <motion.button
-            className="inline-flex items-center touch-target-lg touch-spacing-sm bg-gradient-to-r from-blue-600 via-teal-600 to-slate-700 text-white font-bold rounded-xl sm:rounded-2xl shadow-2xl text-sm sm:text-base touch-manipulation touch-feedback-subtle"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              const nextSection = document.querySelector('#projects') || document.querySelector('#contact');
-              if (nextSection) {
-                nextSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            <span className="mr-2 sm:mr-3">View My Projects</span>
-            <svg 
-              className="w-4 h-4 sm:w-5 sm:h-5" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M17 8l4 4m0 0l-4 4m4-4H3" 
-              />
-            </svg>
-          </motion.button>
         </motion.div>
       </div>
     </section>
+  );
+};
+
+// Separate component for individual experience cards
+const ExperienceCard = ({ 
+  experience, 
+  index, 
+  cardVariants, 
+  formatDate, 
+  getTechColor
+}) => {
+  const cardRef = useRef(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Simplified scroll-based expansion with debouncing to prevent flickering
+  useEffect(() => {
+    if (!cardRef.current) return;
+
+    let timeoutId = null;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          // Clear any pending timeout and collapse immediately when not visible
+          if (timeoutId) clearTimeout(timeoutId);
+          setIsExpanded(false);
+          return;
+        }
+
+        const rect = entry.boundingClientRect;
+        const viewportHeight = window.innerHeight;
+        const cardCenter = rect.top + rect.height / 2;
+        const viewportCenter = viewportHeight / 2;
+        
+        // Calculate distance from viewport center
+        const distance = Math.abs(cardCenter - viewportCenter);
+        const maxDistance = viewportHeight / 2.5;
+        
+        // Expand if card is close to center of viewport
+        const shouldExpand = distance < maxDistance;
+        
+        // Debounce the expansion to prevent flickering
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          setIsExpanded(shouldExpand);
+        }, 50); // Small delay to prevent rapid toggling
+      },
+      {
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1],
+        rootMargin: '0px'
+      }
+    );
+
+    observer.observe(cardRef.current);
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      variants={cardVariants}
+      className="relative"
+      whileHover={{ scale: 1.01 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    >
+      <div className="bg-gradient-to-br from-gray-800/90 via-slate-800/90 to-gray-900/90 backdrop-blur-xl border border-gray-700/50 rounded-2xl shadow-2xl overflow-hidden">
+        {/* Always Visible Header */}
+        <div className="p-4 sm:p-6">
+          <div className="flex items-start gap-4">
+            {/* Company Logo */}
+            <div className="flex-shrink-0">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg border border-gray-600/50 flex items-center justify-center overflow-hidden">
+                {/* Placeholder logo - will be replaced with actual company logos later */}
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded opacity-60"></div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent mb-1">
+                {experience.position}
+              </h3>
+              <h4 className="text-base sm:text-lg font-semibold text-purple-400 mb-2">
+                {experience.company}
+              </h4>
+              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
+                <span className="flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                  </svg>
+                  {formatDate(experience.startDate)} - {formatDate(experience.endDate)}
+                </span>
+                {experience.location && (
+                  <span className="flex items-center gap-1">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                    </svg>
+                    {experience.location}
+                  </span>
+                )}
+              </div>
+            </div>
+            
+            {/* Expansion Indicator */}
+            <motion.div
+              className="flex-shrink-0 ml-2"
+              animate={{ rotate: isExpanded ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Expandable Content */}
+        <motion.div
+          className="px-4 sm:px-6 pb-4 sm:pb-6"
+          animate={{
+            opacity: isExpanded ? 1 : 0,
+            height: isExpanded ? "auto" : 0,
+          }}
+          transition={{
+            duration: 0.4,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+          style={{ overflow: "hidden" }}
+        >
+          {/* Content with left margin to align with text above logo */}
+          <div className="ml-16 sm:ml-18">
+            {/* Description */}
+            <div className="mb-6">
+              <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+                {experience.description}
+              </p>
+            </div>
+
+            {/* Achievements and Technologies Layout */}
+            <div className="space-y-4">
+              {/* Key Achievements - No Header, More Space */}
+              {experience.achievements && experience.achievements.length > 0 && (
+                <div>
+                  <ul className="space-y-2">
+                    {experience.achievements.map((achievement, achIndex) => (
+                      <li 
+                        key={achIndex}
+                        className="flex items-start gap-3 text-gray-300 text-sm"
+                      >
+                        <span className="flex-shrink-0 w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2"></span>
+                        <span>{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Technologies - Compact Design */}
+              {experience.technologies && experience.technologies.length > 0 && (
+                <div className="pt-2">
+                  <div className="flex flex-wrap gap-1.5">
+                    {experience.technologies.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className={`px-2 py-0.5 rounded text-xs font-medium border ${getTechColor(tech.category)}`}
+                      >
+                        {tech.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Gradient Border Effect */}
+        <div
+          className={`absolute inset-0 rounded-2xl transition-all duration-500 pointer-events-none ${
+            isExpanded 
+              ? 'bg-gradient-to-r from-transparent via-blue-500/10 to-transparent'
+              : 'bg-transparent'
+          }`}
+        />
+      </div>
+    </motion.div>
   );
 };
 
