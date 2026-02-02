@@ -39,7 +39,7 @@ function App() {
                     }}
                   />
                 </div>
-                <h1 className={`text-lg sm:text-xl md:text-2xl font-semibold bg-gradient-to-r from-blue-500 to-teal-600 bg-clip-text text-transparent ${getResponsiveClasses('typography')}`}>
+                <h1 className={`text-lg sm:text-xl md:text-2xl font-semibold text-white ${getResponsiveClasses('typography')}`}>
                   Aryan Kapoor
                 </h1>
               </div>

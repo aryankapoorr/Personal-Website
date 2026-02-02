@@ -255,7 +255,7 @@ const Hero = ({ onCTAClick }) => {
                       className="flex items-center gap-4 flex-wrap"
                       variants={itemVariants}
                     >
-                      <span className="text-sm text-gray-400 font-medium">Connect:</span>
+                      <span className="text-sm text-gray-400 font-medium"></span>
                       {professionalLinks.map((link, index) => {
                         const IconComponent = iconMap[link.icon];
                         const colorClasses = colorMap[link.id] || 'text-gray-300 bg-gray-800/50 hover:bg-gray-700/50 border-gray-600/50 hover:border-gray-500/50';
