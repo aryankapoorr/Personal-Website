@@ -1,5 +1,5 @@
 import './App.css';
-import { Hero, Experience, Projects } from './components/sections';
+import { Hero, Experience, Education, Projects } from './components/sections';
 import { personalInfo } from './data/personalInfo';
 import { useResponsiveTransitions } from './hooks';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
@@ -21,7 +21,7 @@ function App() {
   });
 
   return (
-    <div className="App">
+    <div className="App" id="top">
       <div className="min-h-screen bg-gray-900" ref={createResponsiveRef()}>
         {/* Mobile-First Responsive Header */}
         <header className={`bg-gray-800/90 backdrop-blur-sm shadow-xl border-b border-gray-700/50 sticky top-0 z-50 ${getResponsiveClasses('layout')}`}>
@@ -47,10 +47,16 @@ function App() {
               {/* Mobile Navigation - Hidden by default, shown on larger screens */}
               <nav className="nav-desktop space-x-4 sm:space-x-6 lg:space-x-8">
                 <a 
-                  href="#about" 
+                  href="#top" 
                   className={`text-sm sm:text-base text-gray-300 hover:text-cyan-400 transition-colors duration-300 hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.5)] ${getResponsiveClasses('typography')}`}
                 >
                   About
+                </a>
+                <a 
+                  href="#education" 
+                  className={`text-sm sm:text-base text-gray-300 hover:text-teal-400 transition-colors duration-300 hover:drop-shadow-[0_0_8px_rgba(20,184,166,0.5)] ${getResponsiveClasses('typography')}`}
+                >
+                  Education
                 </a>
                 <a 
                   href="#experience" 
@@ -63,12 +69,6 @@ function App() {
                   className={`text-sm sm:text-base text-gray-300 hover:text-pink-400 transition-colors duration-300 hover:drop-shadow-[0_0_8px_rgba(244,114,182,0.5)] ${getResponsiveClasses('typography')}`}
                 >
                   Projects
-                </a>
-                <a 
-                  href="#contact" 
-                  className={`text-sm sm:text-base text-gray-300 hover:text-cyan-400 transition-colors duration-300 hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.5)] ${getResponsiveClasses('typography')}`}
-                >
-                  Contact
                 </a>
               </nav>
 
@@ -89,6 +89,9 @@ function App() {
         <main className={`relative ${getResponsiveClasses('layout')}`}>
           {/* Hero Section */}
           <Hero onCTAClick={(cta) => console.log('CTA clicked:', cta)} />
+
+          {/* Education Section */}
+          <Education />
 
           {/* Experience Section */}
           <Experience />

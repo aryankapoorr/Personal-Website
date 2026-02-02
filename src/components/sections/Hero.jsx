@@ -135,7 +135,7 @@ const Hero = ({ onCTAClick }) => {
   return (
     <section 
       id="hero" 
-      className={`py-12 sm:py-16 lg:py-20 bg-gray-900 ${getResponsiveClasses('layout')}`}
+      className={`pt-12 pb-4 sm:pt-16 sm:pb-6 lg:pt-16 lg:pb-6 bg-gray-900 ${getResponsiveClasses('layout')}`}
       style={getResponsiveContainerStyles()}
       aria-label="Hero section"
       ref={sectionRef}

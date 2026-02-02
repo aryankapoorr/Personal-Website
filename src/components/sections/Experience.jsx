@@ -37,7 +37,7 @@ const Experience = ({ experienceData = experiences }) => {
   return (
     <section 
       id="experience" 
-      className="section-padding bg-gradient-to-br from-gray-900 via-slate-900 to-black relative"
+      className="pt-4 pb-12 sm:pt-6 sm:pb-16 md:pb-20 lg:pb-24 xl:pb-28 bg-gradient-to-br from-gray-900 via-slate-900 to-black relative"
       aria-label="Work Experience"
       ref={sectionRef}
     >
