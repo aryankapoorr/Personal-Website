@@ -78,7 +78,7 @@ const CardDemo = () => {
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">Project Card Example</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card onClick={() => handleCardClick('Project')} className="overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-blue-400 to-purple-500 mb-4 rounded-md"></div>
+              <div className="aspect-video bg-gradient-to-br from-blue-500 to-teal-600 mb-4 rounded-md"></div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Sample Project</h3>
               <p className="text-gray-600 mb-4">A demonstration of how the Card component can be used for project showcases.</p>
               <div className="flex flex-wrap gap-2">
@@ -89,7 +89,7 @@ const CardDemo = () => {
             </Card>
             
             <Card onClick={() => handleCardClick('Project')} className="overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-green-400 to-blue-500 mb-4 rounded-md"></div>
+              <div className="aspect-video bg-gradient-to-br from-slate-500 to-blue-600 mb-4 rounded-md"></div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Another Project</h3>
               <p className="text-gray-600 mb-4">Another example showing responsive design and hover effects.</p>
               <div className="flex flex-wrap gap-2">

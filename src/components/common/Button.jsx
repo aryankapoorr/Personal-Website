@@ -35,7 +35,7 @@ const Button = ({
   
   // Variant-specific styles
   const variantStyles = {
-    primary: 'text-white bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 focus:ring-cyan-500 shadow-lg hover:shadow-xl border border-transparent',
+    primary: 'text-white bg-gradient-to-r from-blue-600 to-teal-700 hover:from-blue-700 hover:to-teal-800 focus:ring-blue-500 shadow-lg hover:shadow-xl border border-transparent',
     secondary: 'text-gray-300 bg-gray-800 border border-gray-600 hover:bg-gray-700 hover:text-white focus:ring-cyan-500 shadow-md hover:shadow-lg',
     outline: 'text-cyan-400 bg-transparent border border-cyan-400 hover:bg-cyan-400/10 focus:ring-cyan-500 hover:border-cyan-300'
   };

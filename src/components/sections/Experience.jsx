@@ -49,7 +49,7 @@ const Experience = ({ experienceData = experiences }) => {
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          <h2 className="text-responsive-2xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 sm:mb-6">
+          <h2 className="text-responsive-2xl font-bold bg-gradient-to-r from-blue-500 via-teal-500 to-slate-600 bg-clip-text text-transparent mb-4 sm:mb-6">
             Work Experience
           </h2>
           <p className="text-responsive-base text-gray-300 max-w-3xl mx-auto leading-relaxed">
@@ -77,7 +77,7 @@ const Experience = ({ experienceData = experiences }) => {
                 {/* Header */}
                 <div className="mb-4 sm:mb-6">
                   <div className="flex flex-col gap-3 sm:gap-4 mb-3 sm:mb-4">
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent leading-tight">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-teal-600 bg-clip-text text-transparent leading-tight">
                       {experience.position}
                     </h3>
                     <div className="text-xs sm:text-sm text-gray-400">
@@ -157,7 +157,7 @@ const Experience = ({ experienceData = experiences }) => {
           </p>
           
           <motion.button
-            className="inline-flex items-center touch-target-lg touch-spacing-sm bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 text-white font-bold rounded-xl sm:rounded-2xl shadow-2xl text-sm sm:text-base touch-manipulation touch-feedback-subtle"
+            className="inline-flex items-center touch-target-lg touch-spacing-sm bg-gradient-to-r from-blue-600 via-teal-600 to-slate-700 text-white font-bold rounded-xl sm:rounded-2xl shadow-2xl text-sm sm:text-base touch-manipulation touch-feedback-subtle"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {

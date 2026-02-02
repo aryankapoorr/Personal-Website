@@ -226,7 +226,7 @@ const Hero = ({ onCTAClick }) => {
                           {personalInfo.name}
                         </motion.span>
                       </h1>
-                      <h2 className="text-lg sm:text-xl font-medium bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                      <h2 className="text-lg sm:text-xl font-medium bg-gradient-to-r from-blue-500 to-teal-600 bg-clip-text text-transparent">
                         <motion.span
                           initial={{ opacity: 0 }}
                           animate={{ opacity: contentLoaded ? 1 : 0 }}

@@ -86,7 +86,7 @@ const Projects = ({ projectsData = projects }) => {
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          <h2 className="text-responsive-xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-3 sm:mb-4">
+          <h2 className="text-responsive-xl font-bold bg-gradient-to-r from-blue-500 via-teal-500 to-slate-600 bg-clip-text text-transparent mb-3 sm:mb-4">
             Featured Projects
           </h2>
           <p className="text-responsive-base text-gray-300 max-w-2xl mx-auto leading-relaxed">

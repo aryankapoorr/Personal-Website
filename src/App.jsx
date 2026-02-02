@@ -39,7 +39,7 @@ function App() {
                     }}
                   />
                 </div>
-                <h1 className={`text-lg sm:text-xl md:text-2xl font-semibold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent ${getResponsiveClasses('typography')}`}>
+                <h1 className={`text-lg sm:text-xl md:text-2xl font-semibold bg-gradient-to-r from-blue-500 to-teal-600 bg-clip-text text-transparent ${getResponsiveClasses('typography')}`}>
                   Aryan Kapoor
                 </h1>
               </div>
@@ -109,7 +109,7 @@ function App() {
             <div className="text-center">
               <p className={`text-sm sm:text-base text-gray-400 leading-relaxed ${getResponsiveClasses('typography')}`}>
                 © 2024 Aryan Kapoor. Built with React and Tailwind CSS.
-                <span className="block sm:inline sm:ml-2 mt-1 sm:mt-0 text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text transition-responsive">
+                <span className="block sm:inline sm:ml-2 mt-1 sm:mt-0 text-transparent bg-gradient-to-r from-blue-500 to-teal-600 bg-clip-text transition-responsive">
                   ✨ Crafted with passion
                 </span>
               </p>
