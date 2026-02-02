@@ -45,7 +45,7 @@ const Education = () => {
   return (
     <section 
       id="education" 
-      className={`py-0 pb-2.5 bg-gray-850 ${getResponsiveClasses('layout')}`}
+      className={`py-0 pb-5 bg-gray-850 ${getResponsiveClasses('layout')}`}
       ref={sectionRef}
     >
       <div className="container">

@@ -72,7 +72,7 @@ const Experience = ({ experienceData = experiences }) => {
   return (
     <section 
       id="experience" 
-      className="relative py-12 sm:py-16 md:py-20 overflow-hidden"
+      className="relative py-4 sm:py-6 md:py-8 overflow-hidden"
       aria-label="Professional Experience"
       ref={sectionRef}
     >
@@ -86,17 +86,14 @@ const Experience = ({ experienceData = experiences }) => {
       <div className="container relative z-10">
         {/* Header */}
         <motion.div
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-4 sm:mb-6"
           initial={{ opacity: 0, y: -20 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-teal-400 to-cyan-300 bg-clip-text text-transparent mb-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-teal-400 to-cyan-300 bg-clip-text text-transparent">
             Experience
           </h2>
-          <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">
-            Professional journey through innovation and growth
-          </p>
         </motion.div>
 
         {/* Experience Cards */}
@@ -133,51 +130,10 @@ const ExperienceCard = ({
   const cardRef = useRef(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Simplified scroll-based expansion with debouncing to prevent flickering
-  useEffect(() => {
-    if (!cardRef.current) return;
-
-    let timeoutId = null;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          // Clear any pending timeout and collapse immediately when not visible
-          if (timeoutId) clearTimeout(timeoutId);
-          setIsExpanded(false);
-          return;
-        }
-
-        const rect = entry.boundingClientRect;
-        const viewportHeight = window.innerHeight;
-        const cardCenter = rect.top + rect.height / 2;
-        const viewportCenter = viewportHeight / 2;
-        
-        // Calculate distance from viewport center
-        const distance = Math.abs(cardCenter - viewportCenter);
-        const maxDistance = viewportHeight / 2.5;
-        
-        // Expand if card is close to center of viewport
-        const shouldExpand = distance < maxDistance;
-        
-        // Debounce the expansion to prevent flickering
-        if (timeoutId) clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-          setIsExpanded(shouldExpand);
-        }, 50); // Small delay to prevent rapid toggling
-      },
-      {
-        threshold: [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1],
-        rootMargin: '0px'
-      }
-    );
-
-    observer.observe(cardRef.current);
-    return () => {
-      if (timeoutId) clearTimeout(timeoutId);
-      observer.disconnect();
-    };
-  }, []);
+  // Simple click handler to toggle expansion
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
     <motion.div
@@ -188,8 +144,11 @@ const ExperienceCard = ({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
       <div className="bg-gradient-to-br from-gray-800/90 via-slate-800/90 to-gray-900/90 backdrop-blur-xl border border-gray-700/50 rounded-2xl shadow-2xl overflow-hidden">
-        {/* Always Visible Header */}
-        <div className="p-4 sm:p-6">
+        {/* Always Visible Header - Clickable */}
+        <div 
+          className="p-4 sm:p-6 cursor-pointer hover:bg-gray-700/10 transition-colors duration-200"
+          onClick={toggleExpanded}
+        >
           <div className="flex items-start gap-4">
             {/* Company Logo */}
             <div className="flex-shrink-0">
@@ -225,16 +184,23 @@ const ExperienceCard = ({
               </div>
             </div>
             
-            {/* Expansion Indicator */}
-            <motion.div
-              className="flex-shrink-0 ml-2"
+            {/* Expansion Indicator - Clickable */}
+            <motion.button
+              className="flex-shrink-0 ml-2 p-2 rounded-full hover:bg-gray-700/50 transition-colors duration-200"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent double-click when clicking the button directly
+                toggleExpanded();
+              }}
               animate={{ rotate: isExpanded ? 180 : 0 }}
               transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label={isExpanded ? "Collapse experience details" : "Expand experience details"}
             >
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
-            </motion.div>
+            </motion.button>
           </div>
         </div>
 

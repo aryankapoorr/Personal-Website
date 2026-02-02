@@ -53,12 +53,6 @@ function App() {
                   About
                 </a>
                 <a 
-                  href="#education" 
-                  className={`text-sm sm:text-base text-gray-300 hover:text-teal-400 transition-colors duration-300 hover:drop-shadow-[0_0_8px_rgba(20,184,166,0.5)] ${getResponsiveClasses('typography')}`}
-                >
-                  Education
-                </a>
-                <a 
                   href="#experience" 
                   className={`text-sm sm:text-base text-gray-300 hover:text-purple-400 transition-colors duration-300 hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] ${getResponsiveClasses('typography')}`}
                 >
