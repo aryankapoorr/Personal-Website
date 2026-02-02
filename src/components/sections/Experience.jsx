@@ -62,7 +62,7 @@ const Experience = ({ experienceData = experiences }) => {
     const colors = {
       framework: 'bg-blue-500/20 text-blue-300 border-blue-400/30',
       language: 'bg-green-500/20 text-green-300 border-green-400/30',
-      database: 'bg-purple-500/20 text-purple-300 border-purple-400/30',
+      database: 'bg-slate-500/20 text-slate-300 border-slate-400/30',
       tool: 'bg-orange-500/20 text-orange-300 border-orange-400/30',
       default: 'bg-gray-500/20 text-gray-300 border-gray-400/30'
     };
@@ -91,7 +91,7 @@ const Experience = ({ experienceData = experiences }) => {
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-teal-400 to-cyan-300 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
             Experience
           </h2>
         </motion.div>
@@ -160,21 +160,21 @@ const ExperienceCard = ({
 
             {/* Content */}
             <div className="flex-1 min-w-0">
-              <h3 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent mb-1">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">
                 {experience.position}
               </h3>
-              <h4 className="text-base sm:text-lg font-semibold text-purple-400 mb-2">
+              <h4 className="text-base sm:text-lg font-semibold text-teal-300 mb-2">
                 {experience.company}
               </h4>
               <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1 text-amber-300">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                   </svg>
                   {formatDate(experience.startDate)} - {formatDate(experience.endDate)}
                 </span>
                 {experience.location && (
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1 text-cyan-300">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
@@ -237,7 +237,7 @@ const ExperienceCard = ({
                         key={achIndex}
                         className="flex items-start gap-3 text-gray-300 text-sm"
                       >
-                        <span className="flex-shrink-0 w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2"></span>
+                        <span className="flex-shrink-0 w-1.5 h-1.5 bg-teal-400 rounded-full mt-2"></span>
                         <span>{achievement}</span>
                       </li>
                     ))}
