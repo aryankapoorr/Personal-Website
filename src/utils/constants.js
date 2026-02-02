@@ -1,9 +1,11 @@
 // Application constants
 export const BREAKPOINTS = {
+  xs: 475,
   mobile: 640,
   tablet: 768,
   desktop: 1024,
   wide: 1280,
+  '2xl': 1536,
 };
 
 export const ANIMATION_DURATION = {

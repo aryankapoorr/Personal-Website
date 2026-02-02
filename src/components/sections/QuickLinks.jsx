@@ -16,6 +16,7 @@ import {
   FaTimes
 } from 'react-icons/fa';
 import { quickLinks } from '../../data/quickLinks.js';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 /**
  * QuickLinks component that displays social and professional links
@@ -32,6 +33,13 @@ const QuickLinks = ({
   const [downloadState, setDownloadState] = useState({});
   const [showPdfViewer, setShowPdfViewer] = useState(false);
   const [pdfUrl, setPdfUrl] = useState('');
+
+  // Add intersection observer for scroll-triggered animations
+  const [sectionRef, isVisible] = useIntersectionObserver({
+    threshold: 0.1,
+    triggerOnce: true,
+    rootMargin: '-50px'
+  });
 
   // Icon mapping for React Icons
   const iconMap = {
@@ -177,29 +185,28 @@ const QuickLinks = ({
   };
 
   return (
-    <section id="quick-links" className={`section-padding ${className}`}>
+    <section id="quick-links" className={`section-padding ${className}`} ref={sectionRef}>
       <div className="container">
         <motion.div
           className="text-center"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          animate={isVisible ? "visible" : "hidden"}
         >
           <motion.h2 
-            className="text-3xl font-bold text-gray-900 mb-4"
+            className="text-responsive-xl font-bold text-gray-900 mb-3 sm:mb-4"
             variants={itemVariants}
           >
             Connect With Me
           </motion.h2>
           <motion.p 
-            className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto"
+            className="text-responsive-base text-gray-600 mb-8 sm:mb-12 max-w-2xl mx-auto px-4 sm:px-6 lg:px-0"
             variants={itemVariants}
           >
             Let's connect and collaborate! Find me on these platforms or get in touch directly.
           </motion.p>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-4xl mx-auto">
+          <div className="grid-responsive-2-4-6 max-w-4xl mx-auto px-4 sm:px-6 lg:px-0">
             {links.map((link) => {
               const IconComponent = iconMap[link.icon];
               const colorClasses = colorMap[link.id] || 'text-gray-600 bg-gray-100 hover:bg-gray-200';
@@ -212,7 +219,8 @@ const QuickLinks = ({
                     // Special handling for resume - default action is to view
                     <motion.div
                       className={`
-                        group relative p-6 rounded-xl transition-all duration-300 
+                        group relative touch-target-lg touch-padding touch-manipulation touch-feedback-subtle
+                        rounded-lg sm:rounded-xl transition-all duration-300 
                         hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
                         ${colorClasses} cursor-pointer
                       `}
@@ -230,18 +238,18 @@ const QuickLinks = ({
                       }}
                       aria-label="View Resume"
                     >
-                      <div className="flex flex-col items-center space-y-3">
+                      <div className="flex flex-col items-center touch-spacing-sm">
                         {/* Icon Container */}
                         <div className="relative">
                           {downloadStateDisplay ? (
                             <downloadStateDisplay.icon 
-                              className={`w-8 h-8 transition-transform duration-300 ${downloadStateDisplay.className}`}
+                              className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 transition-transform duration-300 ${downloadStateDisplay.className}`}
                               aria-hidden="true"
                             />
                           ) : (
                             IconComponent && (
                               <IconComponent 
-                                className="w-8 h-8 transition-transform duration-300 group-hover:scale-110" 
+                                className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 transition-transform duration-300 group-hover:scale-110" 
                                 aria-hidden="true"
                               />
                             )
@@ -252,16 +260,16 @@ const QuickLinks = ({
                         </div>
                         
                         {/* Label */}
-                        <span className="text-sm font-medium text-gray-900 group-hover:text-current transition-colors duration-300">
+                        <span className="text-xs sm:text-sm font-medium text-gray-900 group-hover:text-current transition-colors duration-300 text-center">
                           {downloadStateDisplay ? downloadStateDisplay.text : link.label}
                         </span>
                       </div>
                       
-                      {/* Download button - positioned in corner */}
+                      {/* Download button - positioned in corner with touch-friendly size */}
                       {!downloadStateDisplay && (
                         <motion.button
                           onClick={(e) => handleDownload(link, e)}
-                          className="absolute top-2 right-2 bg-green-600 text-white p-1.5 rounded-full shadow-lg hover:bg-green-700 transition-colors duration-200 opacity-0 group-hover:opacity-100"
+                          className="absolute top-2 right-2 bg-green-600 text-white touch-target rounded-full shadow-lg hover:bg-green-700 transition-colors duration-200 opacity-0 group-hover:opacity-100 flex items-center justify-center"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           aria-label="Download Resume"
@@ -272,8 +280,8 @@ const QuickLinks = ({
                       )}
                       
                       {/* Ripple effect on click */}
-                      <div className="absolute inset-0 rounded-xl overflow-hidden">
-                        <div className="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity duration-150 rounded-xl"></div>
+                      <div className="absolute inset-0 rounded-lg sm:rounded-xl overflow-hidden">
+                        <div className="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity duration-150 rounded-lg sm:rounded-xl"></div>
                       </div>
                     </motion.div>
                   ) : (
@@ -283,7 +291,8 @@ const QuickLinks = ({
                       target={link.external ? '_blank' : '_self'}
                       rel={link.external ? 'noopener noreferrer' : undefined}
                       className={`
-                        group relative p-6 rounded-xl transition-all duration-300 
+                        group relative touch-target-lg touch-padding touch-manipulation touch-feedback-subtle
+                        rounded-lg sm:rounded-xl transition-all duration-300 
                         hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
                         ${colorClasses} block
                       `}
@@ -293,12 +302,12 @@ const QuickLinks = ({
                       onClick={() => handleLinkClick(link)}
                       aria-label={`Visit ${link.label}${link.external ? ' (opens in new tab)' : ''}`}
                     >
-                      <div className="flex flex-col items-center space-y-3">
+                      <div className="flex flex-col items-center touch-spacing-sm">
                         {/* Icon Container */}
                         <div className="relative">
                           {IconComponent && (
                             <IconComponent 
-                              className="w-8 h-8 transition-transform duration-300 group-hover:scale-110" 
+                              className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 transition-transform duration-300 group-hover:scale-110" 
                               aria-hidden="true"
                             />
                           )}
@@ -308,11 +317,11 @@ const QuickLinks = ({
                         </div>
                         
                         {/* Label */}
-                        <span className="text-sm font-medium text-gray-900 group-hover:text-current transition-colors duration-300">
+                        <span className="text-xs sm:text-sm font-medium text-gray-900 group-hover:text-current transition-colors duration-300 text-center">
                           {link.label}
                         </span>
                         
-                        {/* External link indicator */}
+                        {/* External link indicator with touch-friendly positioning */}
                         {link.external && (
                           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-60 transition-opacity duration-300">
                             <svg 
@@ -334,8 +343,8 @@ const QuickLinks = ({
                       </div>
                       
                       {/* Ripple effect on click */}
-                      <div className="absolute inset-0 rounded-xl overflow-hidden">
-                        <div className="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity duration-150 rounded-xl"></div>
+                      <div className="absolute inset-0 rounded-lg sm:rounded-xl overflow-hidden">
+                        <div className="absolute inset-0 bg-white opacity-0 group-active:opacity-20 transition-opacity duration-150 rounded-lg sm:rounded-xl"></div>
                       </div>
                     </motion.a>
                   )}
@@ -346,10 +355,10 @@ const QuickLinks = ({
           
           {/* Optional call-to-action text */}
           <motion.div 
-            className="mt-12 text-center"
+            className="mt-8 sm:mt-12 text-center px-4 sm:px-0"
             variants={itemVariants}
           >
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
               Always open to interesting conversations and collaboration opportunities
             </p>
           </motion.div>
@@ -359,7 +368,7 @@ const QuickLinks = ({
       {/* PDF Viewer Modal */}
       {showPdfViewer && (
         <motion.div
-          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 touch-manipulation"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -373,14 +382,14 @@ const QuickLinks = ({
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+            <div className="flex items-center justify-between touch-padding border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">Resume Preview</h3>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center touch-spacing">
                 <motion.a
                   href={pdfUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2"
+                  className="bg-blue-600 text-white touch-target-lg rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center touch-spacing-sm touch-feedback-subtle"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -390,7 +399,7 @@ const QuickLinks = ({
                 <motion.a
                   href={pdfUrl}
                   download="AryanKapoor_Resume.pdf"
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center space-x-2"
+                  className="bg-green-600 text-white touch-target-lg rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center touch-spacing-sm touch-feedback-subtle"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -399,7 +408,7 @@ const QuickLinks = ({
                 </motion.a>
                 <motion.button
                   onClick={closePdfViewer}
-                  className="text-gray-500 hover:text-gray-700 p-2"
+                  className="text-gray-500 hover:text-gray-700 touch-target touch-feedback-subtle flex items-center justify-center"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   aria-label="Close PDF viewer"
@@ -410,7 +419,7 @@ const QuickLinks = ({
             </div>
 
             {/* PDF Content */}
-            <div className="flex-1 p-4">
+            <div className="flex-1 touch-padding">
               <iframe
                 src={pdfUrl}
                 className="w-full h-full border border-gray-300 rounded"

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Card } from '../common';
 import { experiences } from '../../data/experience';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
+import { scrollStaggerContainer, scrollSlideUp, scrollFadeIn } from '../../utils/animations';
 
 /**
  * Experience Section Component - Simple and Working Version
@@ -13,29 +14,10 @@ const Experience = ({ experienceData = experiences }) => {
     triggerOnce: true
   });
 
-  // Simple animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
+  // Enhanced animation variants using scroll-specific animations
+  const containerVariants = scrollStaggerContainer;
+  const itemVariants = scrollSlideUp;
+  const headerVariants = scrollFadeIn;
 
   // Helper functions
   function formatDate(dateString) {
@@ -62,78 +44,78 @@ const Experience = ({ experienceData = experiences }) => {
       <div className="container relative z-10">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
-          variants={itemVariants}
+          className="text-center mb-12 sm:mb-16 px-4 sm:px-6 lg:px-0"
+          variants={headerVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6">
+          <h2 className="text-responsive-2xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 sm:mb-6">
             Work Experience
           </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-responsive-base text-gray-300 max-w-3xl mx-auto leading-relaxed">
             My professional journey through innovation, impact, and continuous growth 🚀
           </p>
         </motion.div>
 
         {/* Experience Entries */}
         <motion.div
-          className="space-y-12"
+          className="spacing-responsive-lg px-4 sm:px-6 lg:px-0"
           variants={containerVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          {experienceData.map((experience, index) => (
+          {experienceData.map((experience) => (
             <motion.div
               key={experience.id}
               variants={itemVariants}
               className="relative"
             >
               <Card
-                className="bg-gray-800/90 backdrop-blur-sm border border-gray-700/50 shadow-2xl p-8"
+                className="bg-gray-800/90 backdrop-blur-sm border border-gray-700/50 shadow-2xl p-4 sm:p-6 md:p-8"
                 hover={true}
               >
                 {/* Header */}
-                <div className="mb-6">
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
-                    <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                <div className="mb-4 sm:mb-6">
+                  <div className="flex flex-col gap-3 sm:gap-4 mb-3 sm:mb-4">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent leading-tight">
                       {experience.position}
                     </h3>
-                    <div className="text-sm text-gray-400">
+                    <div className="text-xs sm:text-sm text-gray-400">
                       <span className="font-semibold text-cyan-400">
                         {formatDate(experience.startDate)} - {formatDate(experience.endDate)}
                       </span>
                     </div>
                   </div>
                   
-                  <h4 className="text-xl md:text-2xl font-bold text-purple-400 mb-2">
+                  <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-purple-400 mb-2">
                     {experience.company}
                   </h4>
                   {experience.location && (
-                    <span className="text-sm text-gray-400">
+                    <span className="text-xs sm:text-sm text-gray-400">
                       📍 {experience.location}
                     </span>
                   )}
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 mb-6 leading-relaxed text-lg">
+                <p className="text-gray-300 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base md:text-lg">
                   {experience.description}
                 </p>
 
                 {/* Achievements */}
                 {experience.achievements && experience.achievements.length > 0 && (
-                  <div className="mb-6">
-                    <h5 className="text-sm font-bold text-cyan-400 mb-3 uppercase tracking-wider">
+                  <div className="mb-4 sm:mb-6">
+                    <h5 className="text-xs sm:text-sm font-bold text-cyan-400 mb-2 sm:mb-3 uppercase tracking-wider">
                       🏆 Key Achievements
                     </h5>
-                    <ul className="space-y-2">
+                    <ul className="space-y-1.5 sm:space-y-2">
                       {experience.achievements.map((achievement, achievementIndex) => (
                         <li 
                           key={achievementIndex}
-                          className="flex items-start gap-3 text-gray-300"
+                          className="flex items-start gap-2 sm:gap-3 text-gray-300"
                         >
-                          <span className="flex-shrink-0 w-2 h-2 bg-cyan-400 rounded-full mt-2" />
-                          <span className="leading-relaxed">{achievement}</span>
+                          <span className="flex-shrink-0 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-cyan-400 rounded-full mt-1.5 sm:mt-2" />
+                          <span className="leading-relaxed text-sm sm:text-base">{achievement}</span>
                         </li>
                       ))}
                     </ul>
@@ -143,14 +125,14 @@ const Experience = ({ experienceData = experiences }) => {
                 {/* Technologies */}
                 {experience.technologies && experience.technologies.length > 0 && (
                   <div>
-                    <h5 className="text-sm font-bold text-purple-400 mb-3 uppercase tracking-wider">
+                    <h5 className="text-xs sm:text-sm font-bold text-purple-400 mb-2 sm:mb-3 uppercase tracking-wider">
                       ⚡ Technologies Used
                     </h5>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       {experience.technologies.map((tech, techIndex) => (
                         <span
                           key={techIndex}
-                          className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-700/50 text-cyan-400 border border-cyan-500/30"
+                          className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-gray-700/50 text-cyan-400 border border-cyan-500/30"
                         >
                           {tech.name}
                         </span>
@@ -165,17 +147,17 @@ const Experience = ({ experienceData = experiences }) => {
 
         {/* Bottom CTA */}
         <motion.div
-          className="text-center mt-16"
-          variants={itemVariants}
+          className="text-center mt-12 sm:mt-16 px-4 sm:px-6 lg:px-0"
+          variants={headerVariants}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          <p className="text-xl text-gray-300 mb-6 font-medium">
+          <p className="text-lg sm:text-xl text-gray-300 mb-4 sm:mb-6 font-medium">
             Ready to explore my projects? 🚀
           </p>
           
           <motion.button
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 text-white font-bold rounded-2xl shadow-2xl"
+            className="inline-flex items-center touch-target-lg touch-spacing-sm bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 text-white font-bold rounded-xl sm:rounded-2xl shadow-2xl text-sm sm:text-base touch-manipulation touch-feedback-subtle"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {
@@ -185,9 +167,9 @@ const Experience = ({ experienceData = experiences }) => {
               }
             }}
           >
-            <span className="mr-3">View My Projects</span>
+            <span className="mr-2 sm:mr-3">View My Projects</span>
             <svg 
-              className="w-5 h-5" 
+              className="w-4 h-4 sm:w-5 sm:h-5" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"

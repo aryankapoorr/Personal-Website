@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button, LoadingPlaceholder } from '../common';
 import { personalInfo } from '../../data/personalInfo';
 import { fadeIn, slideUp, stagger } from '../../utils/animations';
+import { useResponsiveTransitions } from '../../hooks';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 /**
  * Hero Section Component
@@ -16,6 +18,18 @@ const Hero = ({ onCTAClick }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
+
+  // Add intersection observer for scroll-triggered animations
+  const [sectionRef, isVisible] = useIntersectionObserver({
+    threshold: 0.2,
+    triggerOnce: false, // Allow re-triggering when scrolling back up
+    rootMargin: '-10%'
+  });
+
+  const { getResponsiveClasses, getResponsiveContainerStyles } = useResponsiveTransitions({
+    enableTransitions: true,
+    transitionDuration: 300
+  });
 
   // Simulate content loading delay
   useEffect(() => {
@@ -150,8 +164,10 @@ const Hero = ({ onCTAClick }) => {
   return (
     <section 
       id="hero" 
-      className="section-padding bg-gradient-to-br from-gray-50 via-white to-blue-50 min-h-screen flex items-center"
+      className={`section-padding bg-gradient-to-br from-gray-50 via-white to-blue-50 min-h-screen flex items-center ${getResponsiveClasses('layout')}`}
+      style={getResponsiveContainerStyles()}
       aria-label="Hero section"
+      ref={sectionRef}
     >
       <div className="container">
         <AnimatePresence mode="wait">
@@ -159,7 +175,7 @@ const Hero = ({ onCTAClick }) => {
             // Loading State
             <motion.div
               key="loading"
-              className="max-w-4xl mx-auto text-center"
+              className={`max-w-4xl mx-auto text-center ${getResponsiveClasses('spacing')}`}
               variants={loadingVariants}
               initial="initial"
               exit="exit"
@@ -168,7 +184,7 @@ const Hero = ({ onCTAClick }) => {
               <div className="mb-8 flex justify-center">
                 <LoadingPlaceholder 
                   type="image" 
-                  className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full"
+                  className={`w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full ${getResponsiveClasses('layout')}`}
                 />
               </div>
 
@@ -176,25 +192,25 @@ const Hero = ({ onCTAClick }) => {
               <LoadingPlaceholder 
                 type="text" 
                 lines={1}
-                className="mb-4 max-w-md mx-auto"
+                className={`mb-4 max-w-md mx-auto ${getResponsiveClasses('spacing')}`}
               />
 
               {/* Title Loading Placeholder */}
               <LoadingPlaceholder 
                 type="text" 
                 lines={1}
-                className="mb-6 max-w-sm mx-auto"
+                className={`mb-6 max-w-sm mx-auto ${getResponsiveClasses('spacing')}`}
               />
 
               {/* Summary Loading Placeholder */}
               <LoadingPlaceholder 
                 type="text" 
                 lines={3}
-                className="mb-10 max-w-3xl mx-auto"
+                className={`mb-10 max-w-3xl mx-auto ${getResponsiveClasses('spacing')}`}
               />
 
               {/* Buttons Loading Placeholder */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center ${getResponsiveClasses('layout')}`}>
                 <LoadingPlaceholder 
                   type="button" 
                   className="w-32 sm:w-40"
@@ -209,18 +225,18 @@ const Hero = ({ onCTAClick }) => {
             // Main Content
             <motion.div
               key="content"
-              className="max-w-4xl mx-auto text-center"
+              className={`max-w-4xl mx-auto text-center ${getResponsiveClasses('spacing')}`}
               variants={containerVariants}
               initial="hidden"
-              animate="visible"
+              animate={isVisible ? "visible" : "hidden"}
             >
               {/* Professional Headshot */}
               <motion.div
-                className="mb-8"
+                className={`mb-6 sm:mb-8 ${getResponsiveClasses('spacing')}`}
                 variants={headshotVariants}
               >
                 <div className="relative inline-block">
-                  <div className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mx-auto rounded-full overflow-hidden shadow-lg ring-4 ring-white">
+                  <div className={`img-responsive-md mx-auto rounded-full overflow-hidden shadow-lg ring-2 sm:ring-4 ring-white ${getResponsiveClasses('layout')}`}>
                     <AnimatePresence>
                       {!imageLoaded && (
                         <motion.div
@@ -253,7 +269,7 @@ const Hero = ({ onCTAClick }) => {
                   </div>
                   {/* Enhanced decorative ring with animation */}
                   <motion.div 
-                    className="absolute inset-0 rounded-full ring-2 ring-primary-200 ring-offset-4"
+                    className="absolute inset-0 rounded-full ring-1 sm:ring-2 ring-primary-200 ring-offset-2 sm:ring-offset-4 transition-responsive"
                     animate={{ 
                       scale: [1, 1.05, 1],
                       opacity: [0.5, 1, 0.5]
@@ -269,7 +285,7 @@ const Hero = ({ onCTAClick }) => {
 
               {/* Name with enhanced animation */}
               <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4"
+                className={`text-responsive-2xl font-bold text-gray-900 mb-3 sm:mb-4 px-4 sm:px-0 ${getResponsiveClasses('typography')}`}
                 variants={itemVariants}
               >
                 <motion.span
@@ -283,7 +299,7 @@ const Hero = ({ onCTAClick }) => {
 
               {/* Title with enhanced animation */}
               <motion.h2
-                className="text-xl md:text-2xl lg:text-3xl font-medium text-primary-600 mb-6"
+                className={`text-responsive-lg font-medium text-primary-600 mb-4 sm:mb-6 px-4 sm:px-0 ${getResponsiveClasses('typography')}`}
                 variants={itemVariants}
               >
                 <motion.span
@@ -297,7 +313,7 @@ const Hero = ({ onCTAClick }) => {
 
               {/* Summary with enhanced animation */}
               <motion.p
-                className="text-lg md:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed"
+                className={`text-responsive-base text-gray-600 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed px-4 sm:px-6 lg:px-0 ${getResponsiveClasses('typography')}`}
                 variants={itemVariants}
               >
                 <motion.span
@@ -311,7 +327,7 @@ const Hero = ({ onCTAClick }) => {
 
               {/* Call-to-Action Buttons with enhanced stagger animation */}
               <motion.div
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                className={`flex flex-col xs:flex-row touch-spacing justify-center items-center px-4 sm:px-0 ${getResponsiveClasses('layout')}`}
                 variants={buttonContainerVariants}
               >
                 {personalInfo.callToActions.map((cta, index) => (
@@ -343,13 +359,13 @@ const Hero = ({ onCTAClick }) => {
 
               {/* Enhanced scroll indicator with loading delay */}
               <motion.div
-                className="mt-16 flex justify-center"
+                className={`mt-12 sm:mt-16 flex justify-center ${getResponsiveClasses('spacing')}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 2, duration: 0.8 }}
               >
                 <motion.div
-                  className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center cursor-pointer"
+                  className="touch-target-lg border-2 border-gray-300 rounded-full flex justify-center cursor-pointer touch-manipulation touch-feedback-subtle transition-responsive"
                   animate={{ y: [0, 10, 0] }}
                   transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                   whileHover={{ scale: 1.1 }}
@@ -359,9 +375,21 @@ const Hero = ({ onCTAClick }) => {
                       nextSection.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      const nextSection = document.querySelector('#quick-links') || document.querySelector('section:nth-of-type(2)');
+                      if (nextSection) {
+                        nextSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }
+                  }}
+                  aria-label="Scroll to next section"
                 >
                   <motion.div
-                    className="w-1 h-3 bg-gray-400 rounded-full mt-2"
+                    className="w-1 h-2 sm:h-3 bg-gray-400 rounded-full mt-1.5 sm:mt-2 transition-responsive"
                     animate={{ y: [0, 12, 0] }}
                     transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                   />

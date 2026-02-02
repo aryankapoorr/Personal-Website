@@ -51,23 +51,190 @@
 
 @layer components {
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12;
+    transition: padding-left 0.3s ease-out, padding-right 0.3s ease-out;
   }
 
   .section-padding {
-    @apply py-16 sm:py-20 lg:py-24;
+    @apply py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28;
+    transition: padding-top 0.3s ease-out, padding-bottom 0.3s ease-out;
   }
 
+  /* Touch-friendly interactive elements */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+    transition: min-height 0.2s ease-out, min-width 0.2s ease-out;
+  }
+
+  .touch-target-lg {
+    @apply min-h-[48px] min-w-[48px];
+    transition: min-height 0.2s ease-out, min-width 0.2s ease-out;
+  }
+
+  .touch-target-xl {
+    @apply min-h-[52px] min-w-[52px];
+    transition: min-height 0.2s ease-out, min-width 0.2s ease-out;
+  }
+
+  /* Touch-friendly spacing for mobile */
+  .touch-spacing {
+    @apply gap-3 sm:gap-4 md:gap-6;
+    transition: gap 0.3s ease-out;
+  }
+
+  .touch-spacing-sm {
+    @apply gap-2 sm:gap-3 md:gap-4;
+    transition: gap 0.3s ease-out;
+  }
+
+  .touch-spacing-lg {
+    @apply gap-4 sm:gap-6 md:gap-8;
+    transition: gap 0.3s ease-out;
+  }
+
+  /* Touch-friendly padding for interactive elements */
+  .touch-padding {
+    @apply p-3 sm:p-4 md:p-6;
+    transition: padding 0.3s ease-out;
+  }
+
+  .touch-padding-sm {
+    @apply p-2 sm:p-3 md:p-4;
+    transition: padding 0.3s ease-out;
+  }
+
+  .touch-padding-lg {
+    @apply p-4 sm:p-6 md:p-8;
+    transition: padding 0.3s ease-out;
+  }
+
+  /* Mobile-first responsive text sizes */
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm md:text-base;
+    transition: font-size 0.3s ease-out, line-height 0.3s ease-out;
+  }
+
+  .text-responsive-sm {
+    @apply text-sm sm:text-base md:text-lg;
+    transition: font-size 0.3s ease-out, line-height 0.3s ease-out;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg md:text-xl;
+    transition: font-size 0.3s ease-out, line-height 0.3s ease-out;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+    transition: font-size 0.3s ease-out, line-height 0.3s ease-out;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl;
+    transition: font-size 0.3s ease-out, line-height 0.3s ease-out;
+  }
+
+  .text-responsive-2xl {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
+    transition: font-size 0.3s ease-out, line-height 0.3s ease-out;
+  }
+
+  /* Mobile-first responsive spacing */
+  .spacing-responsive-sm {
+    @apply space-y-4 sm:space-y-6 md:space-y-8;
+  }
+  .spacing-responsive-sm > * + * {
+    transition: margin-top 0.3s ease-out;
+  }
+
+  .spacing-responsive-md {
+    @apply space-y-6 sm:space-y-8 md:space-y-10 lg:space-y-12;
+  }
+  .spacing-responsive-md > * + * {
+    transition: margin-top 0.3s ease-out;
+  }
+
+  .spacing-responsive-lg {
+    @apply space-y-8 sm:space-y-10 md:space-y-12 lg:space-y-16;
+  }
+  .spacing-responsive-lg > * + * {
+    transition: margin-top 0.3s ease-out;
+  }
+
+  /* Mobile-first responsive grid layouts with touch-friendly gaps */
+  .grid-responsive-1-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8;
+    transition: grid-template-columns 0.3s ease-out, gap 0.3s ease-out;
+  }
+
+  .grid-responsive-1-2-3 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8;
+    transition: grid-template-columns 0.3s ease-out, gap 0.3s ease-out;
+  }
+
+  .grid-responsive-1-2-4 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8;
+    transition: grid-template-columns 0.3s ease-out, gap 0.3s ease-out;
+  }
+
+  .grid-responsive-2-4-6 {
+    @apply grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8;
+    transition: grid-template-columns 0.3s ease-out, gap 0.3s ease-out;
+  }
+
+  /* Mobile-first button styles with touch targets */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200;
+    @apply inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 border border-transparent text-sm sm:text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 min-h-[44px] min-w-[44px];
+    transition: padding 0.3s ease-out, font-size 0.3s ease-out, min-height 0.2s ease-out, min-width 0.2s ease-out, background-color 0.2s ease-out;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200;
+    @apply inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 border border-gray-300 text-sm sm:text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200 min-h-[44px] min-w-[44px];
+    transition: padding 0.3s ease-out, font-size 0.3s ease-out, min-height 0.2s ease-out, min-width 0.2s ease-out, background-color 0.2s ease-out;
   }
 
+  /* Mobile-first card styles */
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-shadow duration-200 hover:shadow-md;
+    @apply bg-white rounded-lg sm:rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-shadow duration-200 hover:shadow-md;
+    transition: border-radius 0.3s ease-out, box-shadow 0.2s ease-out;
+  }
+
+  /* Mobile-first navigation styles */
+  .nav-mobile {
+    @apply block md:hidden;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  .nav-desktop {
+    @apply hidden md:flex;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+
+  /* Mobile-first flex utilities */
+  .flex-responsive-col {
+    @apply flex flex-col sm:flex-row;
+    transition: flex-direction 0.3s ease-out;
+  }
+
+  .flex-responsive-row {
+    @apply flex flex-row sm:flex-col md:flex-row;
+    transition: flex-direction 0.3s ease-out;
+  }
+
+  /* Mobile-first image sizing */
+  .img-responsive-sm {
+    @apply w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24;
+    transition: width 0.3s ease-out, height 0.3s ease-out;
+  }
+
+  .img-responsive-md {
+    @apply w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48;
+    transition: width 0.3s ease-out, height 0.3s ease-out;
+  }
+
+  .img-responsive-lg {
+    @apply w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64;
+    transition: width 0.3s ease-out, height 0.3s ease-out;
   }
 }
 
@@ -88,6 +255,94 @@
 
   .animate-pulse-slow {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Smooth responsive transition utilities */
+  .transition-responsive {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transition-responsive-fast {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transition-responsive-slow {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Layout shift prevention utilities */
+  .prevent-layout-shift {
+    contain: layout style;
+  }
+
+  .stable-layout {
+    contain: layout;
+    will-change: auto;
+  }
+
+  /* Smooth breakpoint transitions for specific properties */
+  .transition-spacing {
+    transition: padding 0.3s ease-out, margin 0.3s ease-out, gap 0.3s ease-out;
+  }
+
+  .transition-typography {
+    transition: font-size 0.3s ease-out, line-height 0.3s ease-out, letter-spacing 0.3s ease-out;
+  }
+
+  .transition-layout {
+    transition: width 0.3s ease-out, height 0.3s ease-out, flex-direction 0.3s ease-out, grid-template-columns 0.3s ease-out;
+  }
+
+  .transition-border-radius {
+    transition: border-radius 0.3s ease-out;
+  }
+
+  /* Responsive container queries support */
+  .responsive-container {
+    container-type: inline-size;
+    transition: all 0.3s ease-out;
+  }
+
+  /* Smooth viewport height transitions */
+  .transition-vh {
+    transition: height 0.3s ease-out, min-height 0.3s ease-out, max-height 0.3s ease-out;
+  }
+
+  /* Touch-friendly interaction utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  .touch-pan-x {
+    touch-action: pan-x;
+  }
+
+  .touch-pan-y {
+    touch-action: pan-y;
+  }
+
+  .touch-none {
+    touch-action: none;
+  }
+
+  /* Touch feedback utilities */
+  .touch-feedback {
+    @apply active:scale-95 transition-transform duration-100 ease-out;
+  }
+
+  .touch-feedback-subtle {
+    @apply active:scale-[0.98] transition-transform duration-75 ease-out;
+  }
+
+  .touch-feedback-strong {
+    @apply active:scale-90 transition-transform duration-150 ease-out;
+  }
+
+  /* Touch-safe hover states (only apply on non-touch devices) */
+  @media (hover: hover) and (pointer: fine) {
+    .hover-safe:hover {
+      @apply transform scale-105;
+    }
   }
 
   /* Enhanced border utilities for spectacular effects */

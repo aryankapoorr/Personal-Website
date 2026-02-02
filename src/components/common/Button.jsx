@@ -40,11 +40,11 @@ const Button = ({
     outline: 'text-primary-600 bg-transparent border border-primary-600 hover:bg-primary-50 focus:ring-primary-500 hover:border-primary-700'
   };
   
-  // Size-specific styles
+  // Size-specific styles with touch-friendly minimum sizes
   const sizeStyles = {
-    sm: 'px-3 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg'
+    sm: 'px-3 py-2 text-sm min-h-[44px] min-w-[44px]', // Minimum 44px touch target
+    md: 'px-6 py-3 text-base min-h-[48px] min-w-[48px]', // Comfortable 48px touch target
+    lg: 'px-8 py-4 text-lg min-h-[52px] min-w-[52px]'  // Large 52px touch target
   };
   
   // Combine all styles

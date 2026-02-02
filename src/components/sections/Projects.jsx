@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiExternalLink, FiGithub, FiFileText } from 'react-icons/fi';
 import Card from '../common/Card';
+import LazyImage from '../common/LazyImage';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import { projects } from '../../data/projects';
-import { staggerContainer, slideUp, fadeIn } from '../../utils/animations';
+import { scrollStaggerContainer, scrollSlideUp, scrollFadeIn } from '../../utils/animations';
 
 /**
  * Projects Section Component
@@ -19,9 +19,6 @@ const Projects = ({ projectsData = projects }) => {
     threshold: 0.1,
     triggerOnce: true
   });
-
-  // Get unique categories for potential future filtering
-  const categories = [...new Set(projectsData.map(project => project.category))];
 
   /**
    * Handle project link clicks with analytics tracking
@@ -62,11 +59,17 @@ const Projects = ({ projectsData = projects }) => {
   };
 
   /**
+   * Handle image loading success
+   */
+  const handleImageLoad = (project) => {
+    console.log(`Image loaded successfully for project: ${project.title}`);
+  };
+
+  /**
    * Handle image loading errors
    */
-  const handleImageError = (e) => {
-    // Use placeholder if image fails to load
-    e.target.src = e.target.dataset.placeholder || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlByb2plY3QgSW1hZ2U8L3RleHQ+PC9zdmc+';
+  const handleImageError = (project) => {
+    console.warn(`Failed to load image for project: ${project.title}`);
   };
 
   return (
@@ -78,15 +81,15 @@ const Projects = ({ projectsData = projects }) => {
       <div className="container">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-12"
-          variants={fadeIn}
+          className="text-center mb-8 sm:mb-12 px-4 sm:px-6 lg:px-0"
+          variants={scrollFadeIn}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+          <h2 className="text-responsive-xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-3 sm:mb-4">
             Featured Projects
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <p className="text-responsive-base text-gray-300 max-w-2xl mx-auto leading-relaxed">
             A showcase of my recent work, personal projects, and technical experiments. 
             Each project demonstrates different aspects of my development skills and interests.
           </p>
@@ -94,36 +97,38 @@ const Projects = ({ projectsData = projects }) => {
 
         {/* Projects Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={staggerContainer}
+          className="grid-responsive-1-2-3 px-4 sm:px-6 lg:px-0"
+          variants={scrollStaggerContainer}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          {projectsData.map((project, index) => (
+          {projectsData.map((project) => (
             <motion.div
               key={project.id}
-              variants={slideUp}
+              variants={scrollSlideUp}
               className="h-full"
             >
               <Card
-                className="h-full bg-gray-700/50 backdrop-blur-sm border-gray-600/50 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 flex flex-col"
+                className="h-full bg-gray-700/50 backdrop-blur-sm border-gray-600/50 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 flex flex-col touch-manipulation"
                 hover={true}
                 padding="sm"
               >
                 {/* Project Image */}
-                <div className="relative h-48 mb-4 rounded-lg overflow-hidden bg-gradient-to-br from-gray-600/50 to-gray-700/50">
-                  <img
+                <div className="relative h-36 sm:h-40 md:h-48 mb-3 sm:mb-4 rounded-md sm:rounded-lg overflow-hidden bg-gradient-to-br from-gray-600/50 to-gray-700/50">
+                  <LazyImage
                     src={project.image.src}
                     alt={project.image.alt}
-                    data-placeholder={project.image.placeholder}
-                    onError={handleImageError}
+                    placeholder={project.image.placeholder}
+                    onLoad={() => handleImageLoad(project)}
+                    onError={() => handleImageError(project)}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                    loading="lazy"
+                    threshold={0.1}
+                    rootMargin="100px"
                   />
                   
                   {/* Status Badge */}
                   {project.status && (
-                    <div className="absolute top-3 right-3">
+                    <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
                       <span className={`px-2 py-1 text-xs font-medium rounded-full ${
                         project.status === 'completed' 
                           ? 'bg-green-500/20 text-green-400 border border-green-500/30'
@@ -139,7 +144,7 @@ const Projects = ({ projectsData = projects }) => {
 
                   {/* Featured Badge */}
                   {project.featured && (
-                    <div className="absolute top-3 left-3">
+                    <div className="absolute top-2 sm:top-3 left-2 sm:left-3">
                       <span className="px-2 py-1 text-xs font-medium rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">
                         Featured
                       </span>
@@ -148,25 +153,25 @@ const Projects = ({ projectsData = projects }) => {
                 </div>
 
                 {/* Project Content */}
-                <div className="flex-1 flex flex-col">
+                <div className="flex-1 flex flex-col touch-padding-sm">
                   {/* Title and Category */}
-                  <div className="mb-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-semibold text-white">
+                  <div className="mb-2 sm:mb-3">
+                    <div className="flex items-start justify-between mb-1 sm:mb-2 gap-2">
+                      <h3 className="text-lg sm:text-xl font-semibold text-white leading-tight">
                         {project.title}
                       </h3>
-                      <span className="text-xs text-gray-400 bg-gray-600/50 px-2 py-1 rounded">
+                      <span className="text-xs text-gray-400 bg-gray-600/50 px-2 py-1 rounded flex-shrink-0">
                         {project.category}
                       </span>
                     </div>
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
                       {project.description}
                     </p>
                   </div>
 
                   {/* Technologies */}
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
+                  <div className="mb-3 sm:mb-4">
+                    <div className="flex flex-wrap touch-spacing-sm">
                       {project.technologies.slice(0, 4).map((tech, techIndex) => (
                         <span
                           key={techIndex}
@@ -186,12 +191,12 @@ const Projects = ({ projectsData = projects }) => {
                   {/* Project Links */}
                   <div className="mt-auto">
                     {project.links && project.links.length > 0 ? (
-                      <div className="flex gap-4">
+                      <div className="flex touch-spacing">
                         {project.links.map((link, linkIndex) => (
                           <button
                             key={linkIndex}
                             onClick={() => handleLinkClick(project, link.type, link.url)}
-                            className={`flex items-center gap-2 text-sm font-medium transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] ${
+                            className={`flex items-center touch-spacing-sm text-xs sm:text-sm font-medium transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] touch-target touch-feedback-subtle ${
                               link.type === 'demo' 
                                 ? 'text-cyan-400 hover:text-cyan-300'
                                 : 'text-gray-400 hover:text-gray-300'
@@ -204,7 +209,7 @@ const Projects = ({ projectsData = projects }) => {
                         ))}
                       </div>
                     ) : (
-                      <div className="text-sm text-gray-500">
+                      <div className="text-xs sm:text-sm text-gray-500">
                         Links coming soon
                       </div>
                     )}
@@ -218,18 +223,18 @@ const Projects = ({ projectsData = projects }) => {
         {/* Empty State */}
         {projectsData.length === 0 && (
           <motion.div
-            className="text-center py-12"
-            variants={fadeIn}
+            className="text-center py-8 sm:py-12 px-4 sm:px-6 lg:px-0"
+            variants={scrollFadeIn}
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
             <div className="text-gray-400 mb-4">
-              <svg className="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-300 mb-2">No Projects Yet</h3>
-            <p className="text-gray-400">
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-300 mb-2">No Projects Yet</h3>
+            <p className="text-sm sm:text-base text-gray-400">
               Projects will be displayed here once they are added to the portfolio.
             </p>
           </motion.div>
