@@ -1,8 +1,11 @@
+import amazonLogo from '../assets/amazon.png';
+import cmcLogo from '../assets/cmc.png';
+
 export const experiences = [
   {
     id: "exp-1",
-    company: "TechCorp Solutions",
-    position: "Senior Software Engineer",
+    company: "Amazon",
+    position: "Software Development Engineer",
     startDate: "2022-03",
     endDate: "Present",
     description: "Lead full-stack development of enterprise web applications serving 100k+ users. Architect scalable solutions using modern technologies and mentor junior developers.",
@@ -20,12 +23,13 @@ export const experiences = [
       { name: "AWS", category: "tool" },
       { name: "Docker", category: "tool" }
     ],
-    location: "San Francisco, CA"
+    location: "San Francisco, CA",
+    logo: amazonLogo
   },
   {
     id: "exp-2",
-    company: "StartupXYZ",
-    position: "Full Stack Developer",
+    company: "Amazon",
+    position: "Software Development Engineer Intern",
     startDate: "2020-06",
     endDate: "2022-02",
     description: "Developed and maintained multiple client-facing applications in a fast-paced startup environment. Collaborated directly with product and design teams to deliver user-centric solutions.",
@@ -43,12 +47,13 @@ export const experiences = [
       { name: "Stripe API", category: "tool" },
       { name: "Jest", category: "tool" }
     ],
-    location: "Remote"
+    location: "Remote",
+    logo: amazonLogo
   },
   {
     id: "exp-3",
-    company: "Digital Agency Pro",
-    position: "Frontend Developer",
+    company: "Amazon",
+    position: "Software Development Engineer Intern",
     startDate: "2019-01",
     endDate: "2020-05",
     description: "Created responsive websites and web applications for diverse clients ranging from small businesses to enterprise companies. Focused on performance optimization and cross-browser compatibility.",
@@ -66,6 +71,29 @@ export const experiences = [
       { name: "Sass", category: "tool" },
       { name: "Webpack", category: "tool" }
     ],
-    location: "New York, NY"
+    location: "New York, NY",
+    logo: amazonLogo
+  },
+  {
+    id: "exp-4",
+    company: "Commercial Metals Company",
+    position: "Software Developer Intern",
+    startDate: "2018-06",
+    endDate: "2018-12",
+    description: "Developed software solutions and contributed to various projects in a collaborative team environment.",
+    achievements: [
+      "Contributed to multiple software development projects",
+      "Collaborated with cross-functional teams",
+      "Gained experience in software development lifecycle",
+      "Participated in code reviews and team meetings"
+    ],
+    technologies: [
+      { name: "JavaScript", category: "language" },
+      { name: "HTML5", category: "language" },
+      { name: "CSS3", category: "language" },
+      { name: "Git", category: "tool" }
+    ],
+    location: "Dallas, TX",
+    logo: cmcLogo
   }
 ];

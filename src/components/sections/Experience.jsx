@@ -153,8 +153,15 @@ const ExperienceCard = ({
             {/* Company Logo */}
             <div className="flex-shrink-0">
               <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg border border-gray-600/50 flex items-center justify-center overflow-hidden">
-                {/* Placeholder logo - will be replaced with actual company logos later */}
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded opacity-60"></div>
+                {experience.logo ? (
+                  <img 
+                    src={experience.logo} 
+                    alt={`${experience.company} logo`}
+                    className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+                  />
+                ) : (
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded opacity-60"></div>
+                )}
               </div>
             </div>
 
