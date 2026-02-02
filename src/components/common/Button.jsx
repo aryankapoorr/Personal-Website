@@ -35,9 +35,9 @@ const Button = ({
   
   // Variant-specific styles
   const variantStyles = {
-    primary: 'text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 shadow-sm hover:shadow-md',
-    secondary: 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:ring-primary-500 shadow-sm hover:shadow-md',
-    outline: 'text-primary-600 bg-transparent border border-primary-600 hover:bg-primary-50 focus:ring-primary-500 hover:border-primary-700'
+    primary: 'text-white bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 focus:ring-cyan-500 shadow-lg hover:shadow-xl border border-transparent',
+    secondary: 'text-gray-300 bg-gray-800 border border-gray-600 hover:bg-gray-700 hover:text-white focus:ring-cyan-500 shadow-md hover:shadow-lg',
+    outline: 'text-cyan-400 bg-transparent border border-cyan-400 hover:bg-cyan-400/10 focus:ring-cyan-500 hover:border-cyan-300'
   };
   
   // Size-specific styles with touch-friendly minimum sizes

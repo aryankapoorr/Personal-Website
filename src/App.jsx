@@ -1,5 +1,6 @@
 import './App.css';
 import { Hero, QuickLinks, Experience, Projects } from './components/sections';
+import { personalInfo } from './data/personalInfo';
 import { useResponsiveTransitions } from './hooks';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
 import { motion } from 'framer-motion';
@@ -26,7 +27,18 @@ function App() {
         <header className={`bg-gray-800/90 backdrop-blur-sm shadow-xl border-b border-gray-700/50 sticky top-0 z-50 ${getResponsiveClasses('layout')}`}>
           <div className="container">
             <div className="flex items-center justify-between h-14 sm:h-16 md:h-18 transition-vh">
-              <div className="flex items-center">
+              <div className="flex items-center gap-3">
+                {/* Profile Picture in Header */}
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden ring-1 ring-gray-600 hover:ring-cyan-400/50 transition-all duration-300 flex-shrink-0">
+                  <img
+                    src={personalInfo.headshot.src}
+                    alt={personalInfo.headshot.alt}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.src = personalInfo.headshot.placeholder;
+                    }}
+                  />
+                </div>
                 <h1 className={`text-lg sm:text-xl md:text-2xl font-semibold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent ${getResponsiveClasses('typography')}`}>
                   Aryan Kapoor
                 </h1>
