@@ -44,9 +44,17 @@ const Hero = ({ onCTAClick }) => {
     FaStackOverflow
   };
 
+  // Color mapping for different link types (matching QuickLinks section)
+  const colorMap = {
+    linkedin: 'text-blue-600 bg-blue-100/20 hover:bg-blue-100/30 border-blue-400/30 hover:border-blue-400/50',
+    github: 'text-gray-300 bg-gray-800/50 hover:bg-gray-700/50 border-gray-600/50 hover:border-gray-500/50',
+    email: 'text-green-400 bg-green-100/20 hover:bg-green-100/30 border-green-400/30 hover:border-green-400/50',
+    resume: 'text-red-400 bg-red-100/20 hover:bg-red-100/30 border-red-400/30 hover:border-red-400/50'
+  };
+
   // Get professional and contact links
   const professionalLinks = quickLinks.filter(link => 
-    ['linkedin', 'github', 'email'].includes(link.id)
+    ['linkedin', 'github', 'email', 'resume'].includes(link.id)
   );
 
   // Simulate content loading delay (reduced for compact design)
@@ -114,18 +122,13 @@ const Hero = ({ onCTAClick }) => {
 
   // Handle link clicks
   const handleLinkClick = (link) => {
-    if (link.external) {
+    if (link.id === 'resume') {
+      // Open PDF in new tab for resume
+      window.open(link.url, '_blank', 'noopener,noreferrer');
+    } else if (link.external) {
       window.open(link.url, '_blank', 'noopener,noreferrer');
     } else if (link.url.startsWith('mailto:')) {
       window.location.href = link.url;
-    } else if (link.url.endsWith('.pdf')) {
-      // Handle resume download
-      const linkElement = document.createElement('a');
-      linkElement.href = link.url;
-      linkElement.download = '';
-      document.body.appendChild(linkElement);
-      linkElement.click();
-      document.body.removeChild(linkElement);
     }
   };
 
@@ -148,7 +151,7 @@ const Hero = ({ onCTAClick }) => {
               initial="initial"
               exit="exit"
             >
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 lg:gap-12">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
                 {/* Content Loading */}
                 <div className="flex-1">
                   <div className="flex items-center gap-4 mb-4">
@@ -179,13 +182,8 @@ const Hero = ({ onCTAClick }) => {
                     <LoadingPlaceholder type="button" className="w-24" />
                     <LoadingPlaceholder type="button" className="w-24" />
                     <LoadingPlaceholder type="button" className="w-24" />
+                    <LoadingPlaceholder type="button" className="w-24" />
                   </div>
-                </div>
-                
-                {/* CTA Loading */}
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <LoadingPlaceholder type="button" className="w-32" />
-                  <LoadingPlaceholder type="button" className="w-32" />
                 </div>
               </div>
             </motion.div>
@@ -198,8 +196,8 @@ const Hero = ({ onCTAClick }) => {
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
             >
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 lg:gap-12">
-                {/* Main Content */}
+              <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-12">
+                {/* Main Content - now takes full width */}
                 <div className="flex-1">
                   {/* Profile Picture and Name/Title */}
                   <motion.div className="flex items-center gap-4 mb-4" variants={itemVariants}>
@@ -260,15 +258,20 @@ const Hero = ({ onCTAClick }) => {
                       <span className="text-sm text-gray-400 font-medium">Connect:</span>
                       {professionalLinks.map((link, index) => {
                         const IconComponent = iconMap[link.icon];
+                        const colorClasses = colorMap[link.id] || 'text-gray-300 bg-gray-800/50 hover:bg-gray-700/50 border-gray-600/50 hover:border-gray-500/50';
                         return (
                           <motion.button
                             key={link.id}
                             variants={linkVariants}
                             onClick={() => handleLinkClick(link)}
-                            className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 rounded-lg transition-all duration-200 group border border-gray-700/50 hover:border-cyan-400/30"
+                            className={`flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg transition-all duration-200 group border ${colorClasses}`}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            aria-label={`${link.label} - ${link.external ? 'Opens in new tab' : 'Contact'}`}
+                            aria-label={`${link.label} - ${
+                              link.external ? 'Opens in new tab' : 
+                              link.url.startsWith('mailto:') ? 'Send email' :
+                              link.id === 'resume' ? 'Open resume in new tab' : 'Contact'
+                            }`}
                           >
                             <IconComponent className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
                             <span className="font-medium">{link.label}</span>
@@ -278,54 +281,6 @@ const Hero = ({ onCTAClick }) => {
                     </motion.div>
                   </motion.div>
                 </div>
-
-                {/* Call-to-Action Buttons */}
-                <motion.div
-                  className="flex flex-col sm:flex-row lg:flex-col gap-3 lg:min-w-[200px]"
-                  variants={itemVariants}
-                >
-                  {personalInfo.callToActions.map((cta, index) => (
-                    <motion.div
-                      key={cta.id}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <Button
-                        variant={cta.variant}
-                        size="md"
-                        onClick={() => {
-                          if (onCTAClick) onCTAClick(cta);
-                          
-                          // Handle action
-                          switch (cta.action) {
-                            case 'scroll':
-                              if (cta.target) {
-                                const element = document.querySelector(cta.target);
-                                if (element) {
-                                  element.scrollIntoView({ behavior: 'smooth' });
-                                }
-                              }
-                              break;
-                            case 'download':
-                              if (cta.target) {
-                                const link = document.createElement('a');
-                                link.href = cta.target;
-                                link.download = '';
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                              }
-                              break;
-                          }
-                        }}
-                        className="w-full sm:w-auto lg:w-full justify-center"
-                        ariaLabel={`${cta.label} - ${cta.action === 'scroll' ? 'Navigate to section' : 'Download file'}`}
-                      >
-                        {cta.label}
-                      </Button>
-                    </motion.div>
-                  ))}
-                </motion.div>
               </div>
             </motion.div>
           )}

@@ -14,13 +14,6 @@ export const personalInfo = {
       action: "scroll",
       target: "#projects",
       variant: "primary"
-    },
-    {
-      id: "download-resume",
-      label: "Download Resume",
-      action: "download",
-      target: "/AryanKapoor_Resume.pdf",
-      variant: "secondary"
     }
   ]
 };

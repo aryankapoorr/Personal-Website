@@ -1,5 +1,5 @@
 import './App.css';
-import { Hero, QuickLinks, Experience, Projects } from './components/sections';
+import { Hero, Experience, Projects } from './components/sections';
 import { personalInfo } from './data/personalInfo';
 import { useResponsiveTransitions } from './hooks';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
@@ -89,9 +89,6 @@ function App() {
         <main className={`relative ${getResponsiveClasses('layout')}`}>
           {/* Hero Section */}
           <Hero onCTAClick={(cta) => console.log('CTA clicked:', cta)} />
-
-          {/* Quick Links Section */}
-          <QuickLinks />
 
           {/* Experience Section */}
           <Experience />
