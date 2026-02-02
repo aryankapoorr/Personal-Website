@@ -2,3 +2,4 @@
 export { default as Hero } from './Hero.jsx';
 export { default as QuickLinks } from './QuickLinks.jsx';
 export { default as Experience } from './Experience.jsx';
+export { default as Projects } from './Projects.jsx';
