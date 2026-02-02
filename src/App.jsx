@@ -1,5 +1,6 @@
-import React from 'react';
 import './App.css';
+import { Button } from './components/common';
+import { Hero } from './components/sections';
 
 function App() {
   return (
@@ -34,27 +35,8 @@ function App() {
 
         {/* Main Content */}
         <main>
-          {/* Hero Section Placeholder */}
-          <section id="hero" className="section-padding bg-gradient-to-br from-gray-50 to-white">
-            <div className="container">
-              <div className="text-center">
-                <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                  Welcome to My Portfolio
-                </h1>
-                <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                  Software Engineer passionate about creating innovative solutions and building exceptional user experiences.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button className="btn-primary">
-                    View My Work
-                  </button>
-                  <button className="btn-secondary">
-                    Download Resume
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
+          {/* Hero Section */}
+          <Hero onCTAClick={(cta) => console.log('CTA clicked:', cta)} />
 
           {/* Quick Links Section Placeholder */}
           <section id="quick-links" className="section-padding">
