@@ -115,9 +115,9 @@ function App() {
           <Projects />
         </main>
 
-        {/* Mobile-First Responsive Footer */}
+        {/* Compact Footer */}
         <motion.footer 
-          className={`bg-black text-white section-padding border-t border-gray-800 ${getResponsiveClasses('spacing')}`}
+          className={`bg-black text-white py-6 border-t border-gray-800 ${getResponsiveClasses('spacing')}`}
           ref={footerRef}
           variants={scrollFadeIn}
           initial="hidden"
@@ -125,10 +125,10 @@ function App() {
         >
           <div className="container">
             <div className="text-center">
-              <p className={`text-sm sm:text-base text-gray-400 leading-relaxed ${getResponsiveClasses('typography')}`}>
-                © 2024 Aryan Kapoor. Built with React and Tailwind CSS.
+              <p className={`text-xs sm:text-sm text-gray-400 ${getResponsiveClasses('typography')}`}>
+                © 2026 Aryan Kapoor
                 <span className="block sm:inline sm:ml-2 mt-1 sm:mt-0 text-transparent bg-gradient-to-r from-blue-500 to-teal-600 bg-clip-text transition-responsive">
-                  ✨ Crafted with passion
+                  ✨ Made with heart
                 </span>
               </p>
             </div>

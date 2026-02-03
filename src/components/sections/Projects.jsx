@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FiExternalLink, FiGithub, FiFileText } from 'react-icons/fi';
+import { FiExternalLink, FiGithub, FiFileText, FiCalendar } from 'react-icons/fi';
 import Card from '../common/Card';
 import LazyImage from '../common/LazyImage';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
@@ -8,8 +8,8 @@ import { scrollStaggerContainer, scrollSlideUp, scrollFadeIn } from '../../utils
 
 /**
  * Projects Section Component
- * Displays project portfolio with cards, images, descriptions, and links
- * Features responsive grid layout and scroll-triggered animations
+ * Enhanced design with flexible layouts for projects with/without images
+ * Features logo areas, time periods, and removed unnecessary badges
  * 
  * @param {Object} props - Component props
  * @param {Array} props.projectsData - Optional projects data override
@@ -24,7 +24,6 @@ const Projects = ({ projectsData = projects }) => {
    * Handle project link clicks with analytics tracking
    */
   const handleLinkClick = (project, linkType, url) => {
-    // Future: Add analytics tracking here
     console.log(`Project link clicked: ${project.title} - ${linkType}`);
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -50,54 +49,277 @@ const Projects = ({ projectsData = projects }) => {
    */
   const getTechBadgeColor = (category) => {
     const colors = {
-      language: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10',
-      framework: 'border-purple-500/30 text-purple-400 bg-purple-500/10',
-      database: 'border-green-500/30 text-green-400 bg-green-500/10',
-      tool: 'border-yellow-500/30 text-yellow-400 bg-yellow-500/10'
+      language: 'border-cyan-400/30 text-cyan-300 bg-cyan-500/10 backdrop-blur-sm',
+      framework: 'border-purple-400/30 text-purple-300 bg-purple-500/10 backdrop-blur-sm',
+      database: 'border-green-400/30 text-green-300 bg-green-500/10 backdrop-blur-sm',
+      tool: 'border-yellow-400/30 text-yellow-300 bg-yellow-500/10 backdrop-blur-sm'
     };
-    return colors[category] || 'border-gray-500/30 text-gray-400 bg-gray-500/10';
+    return colors[category] || 'border-white/20 text-gray-300 bg-white/10 backdrop-blur-sm';
   };
 
   /**
-   * Handle image loading success
+   * Generate gradient background for logo fallback
    */
-  const handleImageLoad = (project) => {
-    console.log(`Image loaded successfully for project: ${project.title}`);
+  const getLogoGradient = (projectId) => {
+    const gradients = [
+      'from-purple-500 to-pink-500',
+      'from-blue-500 to-cyan-500',
+      'from-green-500 to-teal-500',
+      'from-orange-500 to-red-500',
+      'from-indigo-500 to-purple-500',
+      'from-pink-500 to-rose-500'
+    ];
+    const index = parseInt(projectId.slice(-1)) || 0;
+    return gradients[index % gradients.length];
   };
 
   /**
-   * Handle image loading errors
+   * Render project logo or fallback
    */
-  const handleImageError = (project) => {
-    console.warn(`Failed to load image for project: ${project.title}`);
+  const renderProjectLogo = (project) => {
+    if (project.logo?.src) {
+      return (
+        <LazyImage
+          src={project.logo.src}
+          alt={project.logo.alt}
+          className="w-full h-full object-contain"
+          threshold={0.1}
+        />
+      );
+    }
+    
+    if (project.logo?.fallback) {
+      return (
+        <div className={`w-full h-full bg-gradient-to-br ${getLogoGradient(project.id)} rounded-lg flex items-center justify-center`}>
+          <span className="text-white font-bold text-lg">
+            {project.logo.fallback}
+          </span>
+        </div>
+      );
+    }
+
+    return (
+      <div className={`w-full h-full bg-gradient-to-br ${getLogoGradient(project.id)} rounded-lg flex items-center justify-center`}>
+        <span className="text-white font-bold text-lg">
+          {project.title.split(' ').map(word => word[0]).join('').slice(0, 2)}
+        </span>
+      </div>
+    );
+  };
+
+  /**
+   * Render project card based on whether it has an image or not
+   */
+  const renderProjectCard = (project) => {
+    const hasImage = project.image?.src;
+
+    if (hasImage) {
+      // Layout with image
+      return (
+        <Card
+          className="h-full bg-white/5 backdrop-blur-xl border border-white/10 hover:border-purple-400/30 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 flex flex-col overflow-hidden group relative hover:bg-white/10"
+          hover={true}
+          padding="none"
+        >
+          {/* Glass reflection effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50" />
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-white/20 via-transparent to-transparent" />
+          
+          {/* Project Image */}
+          <div className="relative h-48 overflow-hidden">
+            <LazyImage
+              src={project.image.src}
+              alt={project.image.alt}
+              placeholder={project.image.placeholder}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              threshold={0.1}
+              rootMargin="100px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
+            
+            {/* Logo overlay */}
+            <div className="absolute top-4 left-4 w-12 h-12">
+              {renderProjectLogo(project)}
+            </div>
+
+            {/* Time period */}
+            {project.timePeriod && (
+              <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/30 backdrop-blur-md px-2 py-1 rounded-full border border-white/10">
+                <FiCalendar className="w-3 h-3 text-gray-300" />
+                <span className="text-xs text-gray-300">{project.timePeriod}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Content */}
+          <div className="p-6 flex-1 flex flex-col relative z-10">
+            <div className="flex items-start justify-between mb-3">
+              <h3 className="text-xl font-semibold text-white leading-tight flex-1">
+                {project.title}
+              </h3>
+              <span className="text-xs text-gray-200 bg-white/10 backdrop-blur-sm px-2 py-1 rounded ml-3 flex-shrink-0 border border-white/20">
+                {project.category}
+              </span>
+            </div>
+
+            <p className="text-gray-100 text-sm leading-relaxed mb-4 flex-1">
+              {project.description}
+            </p>
+
+            {/* Technologies */}
+            <div className="mb-4">
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.slice(0, 4).map((tech, techIndex) => (
+                  <span
+                    key={techIndex}
+                    className={`px-2 py-1 text-xs rounded border ${getTechBadgeColor(tech.category)}`}
+                  >
+                    {tech.name}
+                  </span>
+                ))}
+                {project.technologies.length > 4 && (
+                  <span className="px-2 py-1 text-xs rounded border border-white/20 text-gray-300 bg-white/10 backdrop-blur-sm">
+                    +{project.technologies.length - 4}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Project Links */}
+            <div className="flex gap-4 mt-auto">
+              {project.links?.map((link, linkIndex) => (
+                <button
+                  key={linkIndex}
+                  onClick={() => handleLinkClick(project, link.type, link.url)}
+                  className={`flex items-center gap-2 text-sm font-medium transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] ${
+                    link.type === 'demo' 
+                      ? 'text-cyan-300 hover:text-cyan-200'
+                      : 'text-gray-300 hover:text-white'
+                  }`}
+                  aria-label={`${link.label} for ${project.title}`}
+                >
+                  {getLinkIcon(link.type)}
+                  {link.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </Card>
+      );
+    } else {
+      // Layout without image - more compact, logo-focused design
+      return (
+        <Card
+          className="h-full bg-white/5 backdrop-blur-xl border border-white/10 hover:border-purple-400/30 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 flex flex-col relative overflow-hidden hover:bg-white/10"
+          hover={true}
+          padding="lg"
+        >
+          {/* Glass reflection effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50" />
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-white/20 via-transparent to-transparent" />
+          
+          {/* Header with logo and time */}
+          <div className="flex items-start gap-4 mb-4 relative z-10">
+            <div className="w-16 h-16 flex-shrink-0">
+              {renderProjectLogo(project)}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between mb-2">
+                <h3 className="text-xl font-semibold text-white leading-tight">
+                  {project.title}
+                </h3>
+                <span className="text-xs text-gray-200 bg-white/10 backdrop-blur-sm px-2 py-1 rounded ml-3 flex-shrink-0 border border-white/20">
+                  {project.category}
+                </span>
+              </div>
+              {project.timePeriod && (
+                <div className="flex items-center gap-1 text-gray-200">
+                  <FiCalendar className="w-3 h-3" />
+                  <span className="text-xs">{project.timePeriod}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <p className="text-gray-100 text-sm leading-relaxed mb-4 flex-1 relative z-10">
+            {project.description}
+          </p>
+
+          {/* Technologies */}
+          <div className="mb-4 relative z-10">
+            <div className="flex flex-wrap gap-2">
+              {project.technologies.slice(0, 5).map((tech, techIndex) => (
+                <span
+                  key={techIndex}
+                  className={`px-2 py-1 text-xs rounded border ${getTechBadgeColor(tech.category)}`}
+                >
+                  {tech.name}
+                </span>
+              ))}
+              {project.technologies.length > 5 && (
+                <span className="px-2 py-1 text-xs rounded border border-white/20 text-gray-300 bg-white/10 backdrop-blur-sm">
+                  +{project.technologies.length - 5}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Project Links */}
+          <div className="flex gap-4 mt-auto relative z-10">
+            {project.links?.map((link, linkIndex) => (
+              <button
+                key={linkIndex}
+                onClick={() => handleLinkClick(project, link.type, link.url)}
+                className={`flex items-center gap-2 text-sm font-medium transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] ${
+                  link.type === 'demo' 
+                    ? 'text-cyan-300 hover:text-cyan-200'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+                aria-label={`${link.label} for ${project.title}`}
+              >
+                {getLinkIcon(link.type)}
+                {link.label}
+              </button>
+            ))}
+          </div>
+        </Card>
+      );
+    }
   };
 
   return (
     <section 
       id="projects" 
-      className="section-padding bg-gray-800"
+      className="py-12 sm:py-16 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 relative overflow-hidden"
       ref={sectionRef}
     >
-      <div className="container">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, #8b5cf6 0%, transparent 50%), 
+                           radial-gradient(circle at 75% 75%, #06b6d4 0%, transparent 50%),
+                           radial-gradient(circle at 50% 50%, #10b981 0%, transparent 50%)`
+        }} />
+      </div>
+      
+      <div className="container relative">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-8 sm:mb-12 px-4 sm:px-6 lg:px-0"
+          className="text-center mb-8 px-4 sm:px-6 lg:px-0"
           variants={scrollFadeIn}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
         >
-          <h2 className="text-responsive-xl font-bold text-white mb-3 sm:mb-4">
-            Featured Projects
+          <h2 className="text-responsive-xl font-bold text-white">
+            Projects
           </h2>
-          <p className="text-responsive-base text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            A showcase of my recent work, personal projects, and technical experiments. 
-            Each project demonstrates different aspects of my development skills and interests.
-          </p>
         </motion.div>
 
         {/* Projects Grid */}
         <motion.div
-          className="grid-responsive-1-2-3 px-4 sm:px-6 lg:px-0"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 lg:px-0"
           variants={scrollStaggerContainer}
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
@@ -108,114 +330,7 @@ const Projects = ({ projectsData = projects }) => {
               variants={scrollSlideUp}
               className="h-full"
             >
-              <Card
-                className="h-full bg-gray-700/50 backdrop-blur-sm border-gray-600/50 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10 flex flex-col touch-manipulation"
-                hover={true}
-                padding="sm"
-              >
-                {/* Project Image */}
-                <div className="relative h-36 sm:h-40 md:h-48 mb-3 sm:mb-4 rounded-md sm:rounded-lg overflow-hidden bg-gradient-to-br from-gray-600/50 to-gray-700/50">
-                  <LazyImage
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    placeholder={project.image.placeholder}
-                    onLoad={() => handleImageLoad(project)}
-                    onError={() => handleImageError(project)}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                    threshold={0.1}
-                    rootMargin="100px"
-                  />
-                  
-                  {/* Status Badge */}
-                  {project.status && (
-                    <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                        project.status === 'completed' 
-                          ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                          : project.status === 'in-progress'
-                          ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
-                          : 'bg-gray-500/20 text-gray-400 border border-gray-500/30'
-                      }`}>
-                        {project.status === 'in-progress' ? 'In Progress' : 
-                         project.status === 'completed' ? 'Completed' : 'Planned'}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Featured Badge */}
-                  {project.featured && (
-                    <div className="absolute top-2 sm:top-3 left-2 sm:left-3">
-                      <span className="px-2 py-1 text-xs font-medium rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">
-                        Featured
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Project Content */}
-                <div className="flex-1 flex flex-col touch-padding-sm">
-                  {/* Title and Category */}
-                  <div className="mb-2 sm:mb-3">
-                    <div className="flex items-start justify-between mb-1 sm:mb-2 gap-2">
-                      <h3 className="text-lg sm:text-xl font-semibold text-white leading-tight">
-                        {project.title}
-                      </h3>
-                      <span className="text-xs text-gray-400 bg-gray-600/50 px-2 py-1 rounded flex-shrink-0">
-                        {project.category}
-                      </span>
-                    </div>
-                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Technologies */}
-                  <div className="mb-3 sm:mb-4">
-                    <div className="flex flex-wrap touch-spacing-sm">
-                      {project.technologies.slice(0, 4).map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className={`px-2 py-1 text-xs rounded border ${getTechBadgeColor(tech.category)}`}
-                        >
-                          {tech.name}
-                        </span>
-                      ))}
-                      {project.technologies.length > 4 && (
-                        <span className="px-2 py-1 text-xs rounded border border-gray-500/30 text-gray-400 bg-gray-500/10">
-                          +{project.technologies.length - 4} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Project Links */}
-                  <div className="mt-auto">
-                    {project.links && project.links.length > 0 ? (
-                      <div className="flex touch-spacing">
-                        {project.links.map((link, linkIndex) => (
-                          <button
-                            key={linkIndex}
-                            onClick={() => handleLinkClick(project, link.type, link.url)}
-                            className={`flex items-center touch-spacing-sm text-xs sm:text-sm font-medium transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] touch-target touch-feedback-subtle ${
-                              link.type === 'demo' 
-                                ? 'text-cyan-400 hover:text-cyan-300'
-                                : 'text-gray-400 hover:text-gray-300'
-                            }`}
-                            aria-label={`${link.label} for ${project.title}`}
-                          >
-                            {getLinkIcon(link.type)}
-                            {link.label}
-                          </button>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-xs sm:text-sm text-gray-500">
-                        Links coming soon
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </Card>
+              {renderProjectCard(project)}
             </motion.div>
           ))}
         </motion.div>
@@ -223,14 +338,14 @@ const Projects = ({ projectsData = projects }) => {
         {/* Empty State */}
         {projectsData.length === 0 && (
           <motion.div
-            className="text-center py-8 sm:py-12 px-4 sm:px-6 lg:px-0"
+            className="text-center py-8 px-4 sm:px-6 lg:px-0"
             variants={scrollFadeIn}
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
             <div className="text-gray-400 mb-4">
               <svg className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012 2v2M7 7h10" />
               </svg>
             </div>
             <h3 className="text-lg sm:text-xl font-semibold text-gray-300 mb-2">No Projects Yet</h3>
