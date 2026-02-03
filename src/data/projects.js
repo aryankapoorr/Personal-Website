@@ -1,5 +1,5 @@
 import movieLogo from '../assets/movie.png';
-import sentimentPage from '../assets/sentimentPage.png';
+import sentimentPage from '../assets/sentimentpage.png';
 import cfg from '../assets/cfg.png';
 import shopnshare from '../assets/shopnshare.png';
 import acm from '../assets/acm.png';
