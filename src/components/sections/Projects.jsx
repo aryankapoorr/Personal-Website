@@ -170,7 +170,7 @@ const Projects = ({ projectsData = projects }) => {
             {/* Technologies */}
             <div className="mb-4">
               <div className="flex flex-wrap gap-2">
-                {project.technologies.slice(0, 4).map((tech, techIndex) => (
+                {project.technologies.map((tech, techIndex) => (
                   <span
                     key={techIndex}
                     className={`px-2 py-1 text-xs rounded border ${getTechBadgeColor(tech.category)}`}
@@ -178,11 +178,6 @@ const Projects = ({ projectsData = projects }) => {
                     {tech.name}
                   </span>
                 ))}
-                {project.technologies.length > 4 && (
-                  <span className="px-2 py-1 text-xs rounded border border-white/20 text-gray-300 bg-white/10 backdrop-blur-sm">
-                    +{project.technologies.length - 4}
-                  </span>
-                )}
               </div>
             </div>
 
@@ -195,6 +190,8 @@ const Projects = ({ projectsData = projects }) => {
                   className={`flex items-center gap-2 text-sm font-medium transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] ${
                     link.type === 'demo' 
                       ? 'text-cyan-300 hover:text-cyan-200'
+                      : link.type === 'documentation'
+                      ? 'text-orange-300 hover:text-orange-200'
                       : 'text-gray-300 hover:text-white'
                   }`}
                   aria-label={`${link.label} for ${project.title}`}
@@ -250,7 +247,7 @@ const Projects = ({ projectsData = projects }) => {
           {/* Technologies */}
           <div className="mb-4 relative z-10">
             <div className="flex flex-wrap gap-2">
-              {project.technologies.slice(0, 5).map((tech, techIndex) => (
+              {project.technologies.map((tech, techIndex) => (
                 <span
                   key={techIndex}
                   className={`px-2 py-1 text-xs rounded border ${getTechBadgeColor(tech.category)}`}
@@ -258,11 +255,6 @@ const Projects = ({ projectsData = projects }) => {
                   {tech.name}
                 </span>
               ))}
-              {project.technologies.length > 5 && (
-                <span className="px-2 py-1 text-xs rounded border border-white/20 text-gray-300 bg-white/10 backdrop-blur-sm">
-                  +{project.technologies.length - 5}
-                </span>
-              )}
             </div>
           </div>
 
@@ -275,6 +267,8 @@ const Projects = ({ projectsData = projects }) => {
                 className={`flex items-center gap-2 text-sm font-medium transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] ${
                   link.type === 'demo' 
                     ? 'text-cyan-300 hover:text-cyan-200'
+                    : link.type === 'documentation'
+                    ? 'text-orange-300 hover:text-orange-200'
                     : 'text-gray-300 hover:text-white'
                 }`}
                 aria-label={`${link.label} for ${project.title}`}
