@@ -76,7 +76,7 @@ const Awards = ({ awardsData = awards }) => {
   return (
     <section 
       id="awards" 
-      className="relative py-6 sm:py-8 md:py-10 overflow-hidden"
+      className="relative py-6 sm:py-8 md:py-10 pb-12 sm:pb-16 md:pb-20 overflow-hidden"
       aria-label="Awards and Recognition"
       ref={sectionRef}
     >
@@ -156,9 +156,9 @@ const AwardCard = ({
       onHoverStart={() => setHoveredCard(index)}
       onHoverEnd={() => setHoveredCard(null)}
       animate={{
-        x: floatingOffset.x * 0.5, // Reduce floating intensity
-        y: floatingOffset.y * 0.5,
-        rotate: floatingOffset.rotation * 0.5,
+        x: floatingOffset.x * 0.3, // Further reduce floating intensity
+        y: floatingOffset.y * 0.2, // Reduce vertical movement more
+        rotate: floatingOffset.rotation * 0.3,
       }}
       transition={{
         duration: 6 + floatingOffset.delay,
