@@ -287,7 +287,7 @@ const Projects = ({ projectsData = projects }) => {
   return (
     <section 
       id="projects" 
-      className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 overflow-hidden"
+      className="relative pt-4 pb-12 sm:pt-6 sm:pb-16 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 overflow-hidden"
       ref={sectionRef}
     >
       {/* Enhanced Background Pattern with Bubbles */}

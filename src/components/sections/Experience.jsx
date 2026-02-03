@@ -73,7 +73,7 @@ const Experience = ({ experienceData = experiences }) => {
   return (
     <section 
       id="experience" 
-      className="relative py-4 sm:py-6 md:py-8 overflow-hidden"
+      className="relative pt-2 pb-4 sm:pt-3 sm:pb-6 md:pt-4 md:pb-8 overflow-hidden"
       aria-label="Professional Experience"
       ref={sectionRef}
     >

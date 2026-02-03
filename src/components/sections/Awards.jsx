@@ -102,12 +102,12 @@ const Awards = ({ awardsData = awards }) => {
       <div className="container relative z-10">
         {/* Header */}
         <motion.div
-          className="text-center mb-6 sm:mb-8"
+          className="text-center mb-0 sm:mb-1"
           initial={{ opacity: 0, y: -30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-0">
             Awards
           </h2>
         </motion.div>
