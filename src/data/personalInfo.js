@@ -3,7 +3,7 @@ import aryanHeadshot from '../assets/aryan.jpeg';
 export const personalInfo = {
   name: "Aryan Kapoor",
   title: "Software Engineer",
-  summary: "Passionate software engineer with expertise in full-stack development, specializing in React, Node.js, and cloud technologies. I love building scalable applications and solving complex problems with clean, efficient code.",
+  summary: "Passionate about leveraging technology to solve complex problems. Delivering impactful software solutions at Amazon.",
   headshot: {
     src: aryanHeadshot,
     alt: "Aryan Kapoor - Software Engineer",

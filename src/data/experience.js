@@ -5,93 +5,91 @@ export const experiences = [
   {
     id: "exp-1",
     company: "Amazon",
-    position: "Software Development Engineer",
-    startDate: "2022-03",
+    position: "Software Dev Engineer",
+    startDate: "2025-6",
     endDate: "Present",
-    description: "Lead full-stack development of enterprise web applications serving 100k+ users. Architect scalable solutions using modern technologies and mentor junior developers.",
+    description: "Started full time as a SWE at Amazon",
     achievements: [
-      "Reduced application load time by 40% through performance optimization",
-      "Led migration from monolithic to microservices architecture",
-      "Mentored 3 junior developers and established code review processes",
-      "Implemented CI/CD pipeline reducing deployment time by 60%"
+      "Designed and built a scalable, event-driven microservice from scratch--using AWS resources--with a comprehensive operational review, handling large asynchronous workloads and boosting automated catalog enforcements by 20×",
+      "Productionized the division’s first GenAI tool using web crawling LLMs, boosting violation detection by 15\%",
+      "Employed various AI agents connected to custom MCP servers developing software, increasing output by 30\%",
+      "Redesigned a legacy service by using AWS tools (SQS, Lambda) to lower costs by 20\% and reduce operational load",
+      "Identified \& plugged 15 gaps in alarming \& monitoring of team's services, improving overall response time by 25\%",
+      "Spearheaded initiatives across engineering, product \& operations teams removing ~20,000 catalog violations yearly"
     ],
     technologies: [
+      { name: "Java", category: "language" },
       { name: "React", category: "framework" },
-      { name: "Node.js", category: "framework" },
-      { name: "TypeScript", category: "language" },
-      { name: "PostgreSQL", category: "database" },
-      { name: "AWS", category: "tool" },
-      { name: "Docker", category: "tool" }
+      { name: "Python", category: "language" },
+      { name: "AWS SDK", category: "framework" },
+      { name: "Lambda", category: "tool" },
+      { name: "Scala", category: "language" },
+      { name: "GenAI", category: "tool" }
     ],
-    location: "San Francisco, CA",
+    location: "Dallas, TX",
     logo: amazonLogo
   },
   {
     id: "exp-2",
     company: "Amazon",
-    position: "Software Development Engineer Intern",
-    startDate: "2020-06",
-    endDate: "2022-02",
-    description: "Developed and maintained multiple client-facing applications in a fast-paced startup environment. Collaborated directly with product and design teams to deliver user-centric solutions.",
+    position: "Software Dev Engineer Intern",
+    startDate: "2024-5",
+    endDate: "2024-8",
+    description: "Returned to Amazon for a 2nd internship, optimizing the product audit process",
     achievements: [
-      "Built responsive web applications from scratch using React and Express",
-      "Integrated third-party APIs and payment processing systems",
-      "Improved code coverage from 45% to 85% through comprehensive testing",
-      "Collaborated with UX team to implement accessible design patterns"
+      "Developed a feature leveraging a dynamic React UI and AWS Glue Job to query a large scale database 3x faster",
+      "Improved investigator handling time by 30\% while simultaneously decreasing the tool's operational load by 50\%",
+      "Implemented an intuitive UI of a component querying realtime LLM results, 3x efficiency of product audits",
+      "Designed data schema structure for an ML division to easily parse JSON results, increasing outputs by 200\%"
     ],
     technologies: [
       { name: "React", category: "framework" },
-      { name: "Express.js", category: "framework" },
       { name: "JavaScript", category: "language" },
-      { name: "MongoDB", category: "database" },
-      { name: "Stripe API", category: "tool" },
-      { name: "Jest", category: "tool" }
+      { name: "AWS", category: "tool" },
+      { name: "RDS", category: "database" },
+      { name: "HTML/CSS", category: "language" }
     ],
-    location: "Remote",
+    location: "Dallas, TX",
     logo: amazonLogo
   },
   {
     id: "exp-3",
     company: "Amazon",
-    position: "Software Development Engineer Intern",
-    startDate: "2019-01",
-    endDate: "2020-05",
-    description: "Created responsive websites and web applications for diverse clients ranging from small businesses to enterprise companies. Focused on performance optimization and cross-browser compatibility.",
+    position: "Software Dev Engineer Intern",
+    startDate: "2023-5",
+    endDate: "2023-8",
+    description: "Started at Amazon as an intern in the Selling Partner Services division",
     achievements: [
-      "Delivered 15+ client projects on time and within budget",
-      "Achieved 95+ PageSpeed scores on all production websites",
-      "Implemented modern CSS Grid and Flexbox layouts",
-      "Established responsive design standards for the team"
+      "Wrote Python \& Scala scripts scheduled through EventBridge that filtered S3 data spanning 8 billion records, which were then fed into various machine learning models assessing the violation risk of respective Amazon products",
+      "Cooperated with cross-functional teams to align on requirements, identifying $>5$ million miscategorized products",
+      "Designed an end-to-end process leveraging Lambda \& DynamoDB automating reports of ~5,000 risky sellers"
     ],
     technologies: [
-      { name: "HTML5", category: "language" },
-      { name: "CSS3", category: "language" },
-      { name: "JavaScript", category: "language" },
-      { name: "Vue.js", category: "framework" },
-      { name: "Sass", category: "tool" },
-      { name: "Webpack", category: "tool" }
+      { name: "Scala", category: "language" },
+      { name: "Python", category: "language" },
+      { name: "AWS", category: "tool" },
+      { name: "Apache Spark", category: "tool" },
     ],
-    location: "New York, NY",
+    location: "Dallas, TX",
     logo: amazonLogo
   },
   {
     id: "exp-4",
     company: "Commercial Metals Company",
-    position: "Software Developer Intern",
-    startDate: "2018-06",
-    endDate: "2018-12",
-    description: "Developed software solutions and contributed to various projects in a collaborative team environment.",
+    position: "Software Engineer Intern",
+    startDate: "2022-5",
+    endDate: "2022-8",
+    description: "Interned for CMC as a SWE building an internal dashboard application",
     achievements: [
-      "Contributed to multiple software development projects",
-      "Collaborated with cross-functional teams",
-      "Gained experience in software development lifecycle",
-      "Participated in code reviews and team meetings"
+      "Created a full stack application with C\# .NET calling APIs identifying ~100 errors daily across applications",
+      "Leveraged SQL tables spanning 5 million entries through the Entity Framework using a MVC architectural pattern"
     ],
     technologies: [
-      { name: "JavaScript", category: "language" },
-      { name: "HTML5", category: "language" },
-      { name: "CSS3", category: "language" },
-      { name: "Git", category: "tool" }
+      { name: "C#", category: "language" },
+      { name: ".NET", category: "framework" },
+      { name: "MySQL", category: "database" },
+      { name: "React", category: "framework" },
+      { name: "JavaScript", category: "language" }
     ],
     location: "Dallas, TX",
     logo: cmcLogo

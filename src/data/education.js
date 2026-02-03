@@ -13,8 +13,6 @@ export const education = [
       "Database Systems"
     ],
     achievements: [
-      "Dean's List",
-      "Graduate Research Assistant"
     ]
   },
   {
@@ -31,8 +29,7 @@ export const education = [
       "Operating Systems"
     ],
     achievements: [
-      "Magna Cum Laude",
-      "Computer Science Honor Society"
+      "3x Dean's List"
     ]
   }
 ];

@@ -84,6 +84,7 @@ const Education = () => {
                     <p className="text-sm text-gray-300 mb-1">{edu.institution}</p>
                     <div className="flex items-center gap-3 text-xs text-gray-400">
                       <span>{edu.period}</span>
+                      <span>{edu.achievements}</span>
                     </div>
                   </div>
                 </div>
