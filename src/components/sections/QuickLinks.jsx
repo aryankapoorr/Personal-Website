@@ -16,6 +16,7 @@ import {
   FaTimes
 } from 'react-icons/fa';
 import { quickLinks } from '../../data/quickLinks.js';
+import { BubbleBackground } from '../common';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 /**
@@ -185,8 +186,17 @@ const QuickLinks = ({
   };
 
   return (
-    <section id="quick-links" className={`section-padding ${className}`} ref={sectionRef}>
-      <div className="container">
+    <section id="quick-links" className={`relative section-padding overflow-hidden ${className}`} ref={sectionRef}>
+      {/* Bubble Background */}
+      <BubbleBackground 
+        sectionId="quicklinks"
+        bubbleCount={14}
+        colorTheme="pink"
+        intensity="low"
+        className="z-0"
+      />
+      
+      <div className="container relative z-10">
         <motion.div
           className="text-center"
           variants={containerVariants}

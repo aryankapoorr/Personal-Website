@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { FiExternalLink, FiGithub, FiFileText, FiCalendar } from 'react-icons/fi';
 import Card from '../common/Card';
 import LazyImage from '../common/LazyImage';
+import { BubbleBackground } from '../common';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 import { projects } from '../../data/projects';
 import { scrollStaggerContainer, scrollSlideUp, scrollFadeIn } from '../../utils/animations';
@@ -286,10 +287,10 @@ const Projects = ({ projectsData = projects }) => {
   return (
     <section 
       id="projects" 
-      className="pt-6 pb-12 sm:pt-8 sm:pb-16 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 relative overflow-hidden"
+      className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 overflow-hidden"
       ref={sectionRef}
     >
-      {/* Background Pattern */}
+      {/* Enhanced Background Pattern with Bubbles */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 25% 25%, #8b5cf6 0%, transparent 50%), 
@@ -297,6 +298,15 @@ const Projects = ({ projectsData = projects }) => {
                            radial-gradient(circle at 50% 50%, #10b981 0%, transparent 50%)`
         }} />
       </div>
+
+      {/* Bubble Background */}
+      <BubbleBackground 
+        sectionId="projects"
+        bubbleCount={20}
+        colorTheme="purple"
+        intensity="medium"
+        className="z-0"
+      />
       
       <div className="container relative">
         {/* Section Header */}

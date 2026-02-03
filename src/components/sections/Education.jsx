@@ -45,10 +45,10 @@ const Education = () => {
   return (
     <section 
       id="education" 
-      className={`py-0 pb-5 bg-gray-850 ${getResponsiveClasses('layout')}`}
+      className={`py-2 pb-8 ${getResponsiveClasses('layout')}`}
       ref={sectionRef}
     >
-      <div className="container">
+      <div className="container relative z-10">
         <motion.div
           className="max-w-4xl mx-auto px-0.5"
           variants={containerVariants}

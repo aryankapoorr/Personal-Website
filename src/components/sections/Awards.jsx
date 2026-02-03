@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { awards } from '../../data/awards';
+import { BubbleBackground } from '../common';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 /**
@@ -79,7 +80,7 @@ const Awards = ({ awardsData = awards }) => {
       aria-label="Awards and Recognition"
       ref={sectionRef}
     >
-      {/* Subtle Background with Pastel Accents */}
+      {/* Enhanced Background with Bubbles */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900">
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
         
@@ -88,6 +89,15 @@ const Awards = ({ awardsData = awards }) => {
         <div className="absolute top-3/4 right-1/6 w-32 h-32 bg-teal-400/3 rounded-full blur-2xl"></div>
         <div className="absolute top-1/2 left-3/4 w-20 h-20 bg-purple-400/3 rounded-full blur-2xl"></div>
       </div>
+
+      {/* Bubble Background */}
+      <BubbleBackground 
+        sectionId="awards"
+        bubbleCount={18}
+        colorTheme="amber"
+        intensity="medium"
+        className="z-0"
+      />
 
       <div className="container relative z-10">
         {/* Header */}

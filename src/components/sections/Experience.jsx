@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 import { experiences } from '../../data/experience';
+import { BubbleBackground } from '../common';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
 
 /**
@@ -76,12 +77,21 @@ const Experience = ({ experienceData = experiences }) => {
       aria-label="Professional Experience"
       ref={sectionRef}
     >
-      {/* Simple Background */}
+      {/* Enhanced Background with Bubbles */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-gray-900 to-black">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 via-transparent to-teal-900/10"></div>
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-teal-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
       </div>
+
+      {/* Bubble Background */}
+      <BubbleBackground 
+        sectionId="experience"
+        bubbleCount={16}
+        colorTheme="teal"
+        intensity="medium"
+        className="z-0"
+      />
 
       <div className="container relative z-10">
         {/* Header */}

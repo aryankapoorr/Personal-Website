@@ -1,5 +1,6 @@
 import './App.css';
 import { Hero, Experience, Education, Projects, Awards } from './components/sections';
+import { BubbleBackground } from './components/common';
 import { personalInfo } from './data/personalInfo';
 import { useResponsiveTransitions } from './hooks';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
@@ -117,11 +118,27 @@ function App() {
 
         {/* Main Content with Mobile-First Responsive Design */}
         <main className={`relative ${getResponsiveClasses('layout')}`}>
-          {/* Hero Section */}
-          <Hero onCTAClick={(cta) => console.log('CTA clicked:', cta)} />
+          {/* Combined Hero-Education Section with Shared Background */}
+          <section className="relative bg-gray-900 overflow-hidden">
+            {/* Shared Bubble Background */}
+            <BubbleBackground 
+              sectionId="hero-education"
+              bubbleCount={18}
+              colorTheme="blue"
+              intensity="medium"
+              className="z-0"
+            />
+            
+            {/* Hero Section Content */}
+            <div className="relative z-10">
+              <Hero onCTAClick={(cta) => console.log('CTA clicked:', cta)} />
+            </div>
 
-          {/* Education Section */}
-          <Education />
+            {/* Education Section Content */}
+            <div className="relative z-10">
+              <Education />
+            </div>
+          </section>
 
           {/* Experience Section */}
           <Experience />
