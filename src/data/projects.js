@@ -12,8 +12,47 @@ import bowling from '../assets/bowling.png';
 import utdbowling from '../assets/utdbowling.png';
 import photo from '../assets/photo.png';
 import photoapp from '../assets/photoapp.png';
+import outsidebaseball from '../assets/outsidebaseball.png';
+import ob from '../assets/ob.png';
 
 export const projects = [
+  {
+    id: "project-6",
+    title: "Outside Baseball",
+    description: "Developing a baseball analytics platform using machine learning to predict player performance and game outcomes with advanced statistical modeling",
+    longDescription: "A comprehensive baseball analytics platform that leverages machine learning algorithms to analyze player statistics, predict performance trends, and forecast game outcomes using advanced statistical modeling and data visualization.",
+    timePeriod: "In Progress",
+    logo: {
+      src: outsidebaseball,
+      alt: "Outside Baseball Logo"
+    },
+    image: {
+      src: ob,
+      alt: "Outside Baseball Background"
+    },
+    technologies: [
+      { name: "React", category: "framework" },
+      { name: "JavaScript", category: "language" },
+      { name: "Tailwind CSS", category: "framework" },
+      { name: "AWS S3", category: "database" },
+      { name: "Firebase", category: "tool" },
+      { name: "Python", category: "language" },
+      { name: "Framer Motion", category: "tool" }
+    ],
+    links: [
+      {
+        type: "demo",
+        url: "https://outsidebaseball.web.app",
+        label: "Live Site"
+      },
+      {
+        type: "code",
+        url: "https://github.com/aryankapoorr/outsidebaseball",
+        label: "Source Code"
+      },
+    ],
+    category: "Data Science"
+  },
   {
     id: "project-1",
     title: "Sentiment Analysis Model",
@@ -163,31 +202,6 @@ export const projects = [
       }
     ],
     category: "Backend"
-  },
-  {
-    id: "project-6",
-    title: "Outside Baseball",
-    description: "Developing a baseball analytics platform using machine learning to predict player performance and game outcomes with advanced statistical modeling",
-    longDescription: "A comprehensive baseball analytics platform that leverages machine learning algorithms to analyze player statistics, predict performance trends, and forecast game outcomes using advanced statistical modeling and data visualization.",
-    timePeriod: "In Progress",
-    logo: {
-      fallback: "OB"
-    },
-    technologies: [
-      { name: "Python", category: "language" },
-      { name: "Machine Learning", category: "tool" },
-      { name: "Data Analytics", category: "tool" },
-      { name: "Pandas", category: "database" },
-      { name: "Scikit-learn", category: "framework" }
-    ],
-    links: [
-      {
-        type: "documentation",
-        url: "https://colab.research.google.com/drive/1O-d-lI2sXSskRtMOHANdPHkAHZ8tIvlr?usp=sharing",
-        label: "Project Notebook"
-      }
-    ],
-    category: "Data Science"
   },
   {
     id: "project-7",
