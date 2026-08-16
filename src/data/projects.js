@@ -1,3 +1,5 @@
+import fantasyboard from '../assets/fantasyboard.png';
+import fantasyboardLogo from '../assets/fantasyboard-logo.png';
 import movieLogo from '../assets/movie.png';
 import sentimentPage from '../assets/sentimentpage.png';
 import cfg from '../assets/cfg.png';
@@ -118,6 +120,43 @@ export const projects = [
       {
         type: "code",
         url: "https://github.com/cfgtexas23/Team-20",
+        label: "Source Code"
+      }
+    ],
+    category: "Full Stack"
+  },
+  {
+    id: "project-10",
+    title: "FantasyBoard",
+    description: "Built a fantasy football draft board that merges consensus expert rankings with live ADP into one drag-and-drop board, with custom tiers, favorites, notes, and live pick tracking during a real draft",
+    longDescription: "FantasyBoard is a full-stack fantasy football draft board built with Next.js and React. It merges FantasyPros expert consensus rankings with live ESPN/FFC average draft position data into a single virtualized drag-and-drop board that stays smooth even across 1,000+ ranked players. Users can group players into custom tiers, favorite and annotate targets, and track every pick live as a draft unfolds — either as a guest (saved to the browser) or signed in with Google (synced in real time to the cloud across devices).",
+    timePeriod: "Aug 2026",
+    logo: {
+      src: fantasyboardLogo,
+      alt: "FantasyBoard Logo"
+    },
+    image: {
+      src: fantasyboard,
+      alt: "FantasyBoard draft board landing page"
+    },
+    technologies: [
+      { name: "Next.js", category: "framework" },
+      { name: "React", category: "framework" },
+      { name: "TypeScript", category: "language" },
+      { name: "Tailwind CSS", category: "framework" },
+      { name: "Firebase", category: "tool" },
+      { name: "Zustand", category: "tool" },
+      { name: "dnd-kit", category: "tool" }
+    ],
+    links: [
+      {
+        type: "demo",
+        url: "https://fantasydraftboard.vercel.app",
+        label: "Live Site"
+      },
+      {
+        type: "code",
+        url: "https://github.com/aryankapoorr/fantasyboard",
         label: "Source Code"
       }
     ],
